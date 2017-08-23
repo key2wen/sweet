@@ -1,0 +1,142 @@
+<head>
+    <link href="/static/lib/bootstrap/css/fileinput.min.css" rel="stylesheet" type="text/css"/>
+</head>
+
+<form id="questionForm" class="form-horizontal" action="/question/addOrEdit#if($question)?id=$question.id#end" method="post">
+
+    <caption>
+        <br>
+        <ol class="breadcrumb">
+            <li>
+                #if($question)编辑题目#else新增题目#end
+            </li>
+        </ol>
+    </caption>
+
+    <div class="form-group">
+        <label for="title" class="col-sm-2 control-label">题目描述: </label>
+
+        <div class="col-sm-4">
+            <textarea id="description" name="description" class="form-control" placeholder="必填，最长200个字符" maxLength="200" required>$!question.description</textarea>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="title" class="col-sm-2 control-label">选项A: </label>
+
+        <div class="col-sm-4">
+            <input id="phone" type="text" class="form-control" id="optionA" name="optionA" value="$!question.optionA" maxLength="100" placeholder="必填，最长100个字符"
+                   required/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="title" class="col-sm-2 control-label">选项B: </label>
+
+        <div class="col-sm-4">
+            <input id="phone" type="text" class="form-control" id="optionB" name="optionB" value="$!question.optionB" maxLength="100" placeholder="必填，最长100个字符"
+                   required/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="title" class="col-sm-2 control-label">选项C: </label>
+
+        <div class="col-sm-4">
+            <input id="phone" type="text" class="form-control" id="optionC" name="optionC" value="$!question.optionC"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="title" class="col-sm-2 control-label">选项D: </label>
+
+        <div class="col-sm-4">
+            <input id="phone" type="text" class="form-control" id="optionD" name="optionD" value="$!question.optionD"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="title" class="col-sm-2 control-label">答案: </label>
+
+        <div class="col-sm-4">
+            <select name="result" id="result" class="form-control">
+                <option value="A" #if($question.result == 'A') selected #end>A</option>
+                <option value="B" #if($question.result == 'B') selected #end>B</option>
+                <option value="C" #if($question.result == 'C') selected #end>C</option>
+                <option value="D" #if($question.result == 'D') selected #end>D</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="title" class="col-sm-2 control-label">关联文章: </label>
+
+        <div class="col-sm-4">
+            <select name="articleId" id="articleId" class="form-control">
+                #foreach($article in $articles)
+                    <option value="$article.id" #if($article.id == $articleid) selected #end>
+                        $article.title
+                    </option>
+                #end
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="title" class="col-sm-2 control-label"></label>
+        <div for="title" class="col-sm-4 control-label">
+            #if(!$question)
+            <button id="continueSubmitBtn" type="button" class="btn bg-primary">继续添加</button>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            #end
+            <button id="cancelBtn" type="button" class="btn bg-primary">取消</button>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="submit" id="submitBtn" class="btn bg-primary ">确认</button>
+        </div>
+    </div>
+
+</form>
+
+<form id="uploadForm" action="">
+    <ol class="breadcrumb">
+        <li>
+            导入题目
+        </li>
+    </ol>
+
+    <div style="width: 400px;margin-left: 50px;">
+        <input id="xx" type="file" class="file"/>
+    </div>
+</form>
+
+<script src="/static/lib/bootstrap/js/fileinput.min.js" type="text/javascript"/>
+<script src="http://cdn.bootcss.com/bootstrap-fileinput/4.3.0/js/fileinput_locale_zh.js" type="text/javascript"/>
+<script>
+
+    $("#cancelBtn").on("click", function () {
+        window.history.go(-1);
+    });
+
+    $("#continueSubmitBtn").on("click", function(){
+        $("#questionForm").attr("action", "/question/addOrEdit?isContinue=1");
+        $("#questionForm").submit();
+    });
+
+    function initFileInput(ctrlName, uploadUrl) {
+        var control = $('#' + ctrlName);
+        control.fileinput({
+            language: 'zh', //设置语言
+            uploadUrl: uploadUrl, //上传的地址
+            allowedFileExtensions : ['xlsx', 'xls','gif'],//接收的文件后缀
+            showUpload: false, //是否显示上传按钮
+            showCaption: false,//是否显示标题
+            browseClass: "btn btn-primary", //按钮样式
+            previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+        });
+    }
+
+    initFileInput("file-Portrait", "xx");
+
+
+
+</script>

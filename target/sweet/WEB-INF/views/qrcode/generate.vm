@@ -1,0 +1,23 @@
+百度：
+<form action="${request.contextPath}/qrcode/pic" method="post">
+    <p>输入单词：</p>
+    <input name="qrtext" type="text">
+    <input hidden="hidden" name="fanyi" value="baidu">
+    <input value="生成二维码" type="submit">
+</form>
+
+有道：
+<form action="${request.contextPath}/qrcode/pic" method="post">
+    <p>输入单词：</p>
+    <input name="qrtext" type="text">
+    <input hidden="hidden" name="fanyi" value="youdao">
+    <input value="生成二维码" type="submit">
+</form>
+
+声母：
+<form action="${request.contextPath}/qrcode/pic" method="post">
+    <p>输入声母：</p>
+    <input name="qrtext" type="text">
+    <input hidden="hidden" name="fanyi" value="shengmu">
+    <input value="生成二维码" type="submit">
+</form>

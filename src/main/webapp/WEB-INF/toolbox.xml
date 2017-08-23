@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!-- toolbox是ChainedContext(VelocityContext的子类)的一个字段, volocity在merge之前会将这个配置填充到toolbox中,渲染时会使用toolbox解析 -->
+<toolbox>
+    <tool>
+        <!-- key是vm文件引用时使用的字面量 -->
+        <key>date</key>
+        <scope>request</scope>
+        <!-- 使用的类 -->
+        <class>org.apache.velocity.tools.generic.DateTool</class>
+        <!-- 为使用的类填充字段, 本例中,format指向DateTool的字段:format -->
+        <parameter name="format" value="yyyy-MM-dd HH:mm:ss"/>
+    </tool>
+    <tool>
+        <key>onlydate</key>
+        <scope>request</scope>
+        <class>org.apache.velocity.tools.generic.DateTool</class>
+        <parameter name="format" value="yyyy-MM-dd"/>
+    </tool>
+    <tool>
+        <key>link</key>
+        <scope>request</scope>
+        <class>org.apache.velocity.tools.view.tools.LinkTool</class>
+    </tool>
+    <tool>
+        <key>stringUtils</key>
+        <scope>request</scope>
+        <class>org.apache.velocity.util.StringUtils</class>
+    </tool>
+    <tool>
+        <key>math</key>
+        <scope>application</scope>
+        <class>org.apache.velocity.tools.generic.MathTool</class>
+    </tool>
+    <tool>
+        <key>esc</key>
+        <scope>request</scope>
+        <class>org.apache.velocity.tools.generic.EscapeTool</class>
+    </tool>
+    <tool>
+        <key>params</key>
+        <scope>request</scope>
+        <class>org.apache.velocity.tools.view.tools.ParameterParser</class>
+    </tool>
+    <tool>
+        <key>version</key>
+        <scope>request</scope>
+        <class>com.wenwen.sweet.util.VersionController</class>
+    </tool>
+</toolbox>

@@ -1,0 +1,165 @@
+<table class="table table-hover" style="margin-left: 35px; width: 95%;">
+
+    <caption>
+        <br>
+        <ol class="breadcrumb">
+            <li>单位列表
+            </li>
+            <button class="btn btn-default col-xs-offset-10" data-toggle="modal" style=""
+                        data-target="#newWorkDepartmentModal">
+                新增单位
+            </button>
+        </ol>
+
+    </caption>
+    <thead>
+    <tr>
+        <th>序号</th>
+        <th>名称</th>
+        <!--
+        <th>省/市</th>
+        <th>详细地址</th>
+        -->
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+        #foreach($workDepartment in $!pagedResult.list)
+        <tr>
+            <td class="col-xs-1">$velocityCount</td>
+            <td class="col-xs-4">$!workDepartment.name</td>
+            <!--
+            <td class="col-xs-2">$!workDepartment.province/$workDepartment.city</td>
+            <td class="col-xs-3">$!workDepartment.address</td>
+            -->
+            <td class="col-sm-1" style="min-width: 100px;">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-xs btn-link" onclick="location='/work/toAddOrEdit?id=$workDepartment.id'">编辑</button>
+                    <button class="btn btn-xs btn-link dropdown-toggle" type="button" id="action$workDepartment.id"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="caret"></span>
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <!--
+                    <ul class="dropdown-menu" aria-labelledby="action$workDepartment.id">
+                        <li><a data-toggle="modal" data-target="#delete_modal" data-content="确定删除此单位?"
+                               data-link="/work/delete?id=$workDepartment.id">删除</a></li>
+                    </ul>
+                    -->
+                    <ul class="dropdown-menu">
+                        <li><a href="/work/delete?id=$workDepartment.id" data-content="确定删除此单位?">删除</a></li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        #end
+    </tbody>
+</table>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="newWorkDepartmentModal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    新增单位
+                </h4>
+            </div>
+            <div class="modal-body">
+
+                <table class="table table-hover" style="margin-left: 35px; width: 95%;">
+
+                    <form id="workDepartment" class="form-horizontal" action="/work/addOrEdit" method="post">
+                        <tbody>
+                        <tr>
+                            <td class="col-xs-1">单位名称: </td>
+                            <td class="col-xs-1"><input id="name" type="text" class="input-medium" name="name" value="" maxLength="10" required/></td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-1">机构编码: </td>
+                            <td class="col-xs-1"><input id="code" name="code" class="input-medium" value=""/></td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-1">所在地区: </td>
+                            <td class="col-xs-3">
+                                <select id="province" name="province" style="width: 140px;font-size: 14px;font-weight: normal;color: #333333;border: 1px solid #e5e5e5;"></select>
+                                <select id="city" name="city" style="width: 140px;font-size: 14px;font-weight: normal;color: #333333;border: 1px solid #e5e5e5;"></select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-1">详细地址: </td>
+                            <td class="col-xs-1">
+                                <input style="max-width: 400px" id="address" class="form-control" name="address" maxLength="70" required value=""/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-1">
+                                <button type="submit" class="btn btn-default " >确&nbsp; &nbsp;认</button></td>
+                            <td class="col-xs-1">
+                                <button id="cancelBtn" type="button" class="btn btn-default " >取&nbsp; &nbsp;消</button></td>
+                        </tr>
+                        </tbody>
+
+                    </form>
+                </table>
+
+            </div>
+           #* <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">关闭
+                </button>
+               *##* <button type="button" class="btn btn-primary">
+                    提交
+                </button>*##*
+            </div>*#
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<nav>
+    <div class="col-xs-4 col-xs-offset-4">
+        ## 使用分页宏
+        #pagination($pagedResult)
+    </div>
+</nav>
+<script>
+    $("#cancelBtn").on("click", function(){
+        $('#newWorkDepartmentModal').modal('hide');
+    });
+</script>
+<script src="/static/lib/cityselect/citydata.js"></script>
+<script>
+    $(function(){
+        //省市级联
+        var citySelected=[11,1101];
+        #if($workDepartment)
+            for(var i=0;i<data.length;i++){
+                if(data[i].name=="$workDepartment.province"){
+                    citySelected[0]=data[i].id;
+                    for(var j=0;j<data[i].cities.length;j++){
+                        if(data[i].cities[j].name=="$workDepartment.city"){
+                            citySelected[1]=data[i].cities[j].id;
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+        #end
+        $('#province, #city').citylist({
+            data    : data,
+            id      : 'id',
+            children: 'cities',
+            name    : 'name',
+            metaTag : 'name',
+            selected: citySelected
+        });
+    });
+</script>
+
+

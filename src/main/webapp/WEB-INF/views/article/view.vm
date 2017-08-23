@@ -1,0 +1,57 @@
+#set($layout="null.vm")
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>$!page_title</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <!-- Makes your prototype chrome-less once bookmarked to your phone's home screen -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- 控制iphone状态栏 -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link href="/static/css/article/view.css" rel="stylesheet"/>
+
+</head>
+<body>
+
+<div class="content">
+    <div class="rich_media_inner">
+        <div class="rich_media_area_primary">
+            <h2 class="rich_media_title">
+                $!article.title
+            </h2>
+
+            <div class="rich_media_meta_list">
+                <em class="rich_media_meta rich_media_meta_text">
+                    $!date.format("yyyy-MM-dd", $!article.submitTime)
+                </em>
+
+                <em class="rich_media_meta rich_media_meta_text">$!article.author</em>
+
+            ## 这里最好换成指向微信公众号的连接
+                <em class="rich_media_meta rich_media_meta_text" style="font-size: small; font-style: italic;">
+                    #if(not $!article.endTime or $!article.endTime.before($!date.getDate()))
+                        &nbsp;&nbsp;已过期
+                    #end
+                </em>
+
+            </div>
+
+            <div class="rich_media_content">
+                #sliteral($!article.content)
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Include the compiled Ratchet JS -->
+<script src="/static/lib/ratchet/js/ratchet.min.js"></script>
+
+</body>
+</html>
+

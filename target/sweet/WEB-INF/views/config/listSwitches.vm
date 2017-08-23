@@ -1,0 +1,49 @@
+<table class="table table-hover" style="border: none; margin-left: 35px; width: 95%;">
+    <caption>
+        <br>
+        <ol id="articleTab" class="breadcrumb">
+            <li>系统配置</li>
+            <li>开关</li>
+        </ol>
+
+    </caption>
+
+</table>
+
+#foreach($!switch in $!switches.list)
+    <div class="row">
+        <div class="col-xs-2 col-xs-offset-4" style="padding-top: 10px;">$!switch.label :</div>
+        <div class="col-xs-4">
+            <input class="switch" data-on-text="开" data-off-text="关" data-on-color="info"
+                   data-label="$!switch.label" data-size="large" type="checkbox" #if($switch.enabled)checked#end/>
+        </div>
+    </div>
+    <br>
+
+#end
+
+<script>
+    $("input[type='checkbox']").bootstrapSwitch();
+
+    $("input[type='checkbox']").on('switchChange.bootstrapSwitch', function (event, state) {
+        $.ajax({
+            type: "post",
+            url: "/config/turnSwitch",
+            data: {
+                label: $(this).attr("data-label"),
+                state: state
+            },
+            success: function(data) {
+                if (!(data && data.status && data.status.status_code === 0)) {
+                    alert("开关切换失败");
+                    window.location.reload();
+                }
+            },
+            error: function() {
+                alert("开关切换失败");
+                window.location.reload();
+            }
+        })
+
+    });
+</script>

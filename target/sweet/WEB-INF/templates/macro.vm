@@ -1,0 +1,19 @@
+#macro( pagination $pagedResult )
+<ul class="pagination">
+	#if($pagedResult.total == 0)
+		<p class="text-center text-primary col-md-12 col-xs-offset-6">无结果</p>
+	#else
+		<li><a href="$link.requestPath?pageNum=1&pageSize=$pagedResult.pageSize">首页</a></li>
+	    #foreach( $i in [ $pagedResult.minPage .. $pagedResult.maxPage ])
+	        <li #if($i == $pagedResult.pageNum) class="active" #end>
+	            <a href="$link.requestPath?pageNum=$i&pageSize=$pagedResult.pageSize">$i</a>
+	        </li>
+	    #end
+	    <li><a href="$link.requestPath?pageNum=$!pagedResult.totalPages&pageSize=$pagedResult.pageSize">末页</a></li>
+	#end
+</ul>
+#end
+
+#macro(sliteral $security_literal_x_z)
+    $!{security_literal_x_z}
+#end

@@ -1,0 +1,32 @@
+#if(!$pageNum)
+    #if($params.pageNum) #set($pageNum = $math.toInteger($params.pageNum)) #else #stop #end
+#end
+#if(!$pageSize)
+    #if($params.pageSize) #set($pageSize = $math.toInteger($params.pageSize)) #else #stop #end
+#end
+#if(!$totalSize) #stop #end
+#set($totalPage = $totalSize/$pageSize+1)
+#if(!$pageStep) #set($pageStep = 3) #end
+#if(!$pageUrl) #set($pageUrl = "?") #end
+
+#*pageNum: $pageNum
+pageSize: $pageSize
+totalSize: $totalSize
+totalPage: $totalPage
+pageStep: $pageStep
+pageUrl: $pageUrl*#
+
+#set($minPage = $pageNum - $pageStep)
+#set($maxPage = $pageNum + $pageStep)
+
+<nav>
+    <ul class="pagination">
+        <li><a href="${pageUrl}pageNum=1&pageSize=$pageSize">首页</a></li>
+        #foreach($pageIndex in [$minPage..$maxPage])
+            #if($pageIndex > 0 && $pageIndex <= $totalPage)
+                <li #if($pageIndex==$pageNum) class="active" #end><a href="${pageUrl}pageNum=$pageIndex&pageSize=$pageSize">$pageIndex</a></li>
+            #end
+        #end
+        <li><a href="${pageUrl}pageNum=$!totalPage&pageSize=$pageSize">末页</a></li>
+    </ul>
+</nav>

@@ -1,0 +1,187 @@
+@exam_cls_prefix: exam;
+@tips_color: #7fcafd;
+@border-color: #dadada;
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+}
+
+#main {
+  max-width: 800px;
+  height: 100%;
+  margin: auto;
+}
+
+.option {
+  border-radius: 5px;
+  overflow: hidden;
+  border: solid 1px @border-color;
+  position: relative;
+  margin: 12px 0;
+
+  &_option {
+    width: 12%;
+    background-color: #f1f1f1;
+    text-align: center;
+    font-size: 20px;
+    line-height: 20px;
+    color: @tips_color;
+    position: absolute;
+    padding: 10px;
+    height: 100%;
+    font-style: italic;
+    font-family: "Songti SC";
+    &_selected {
+      border-color: cornflowerblue;
+      background-color: cornflowerblue;
+    }
+  }
+  &_desc {
+    float: right;
+    width: 88%;
+    font-size: 14px;
+    padding: 10px;
+    background-color: white;
+  }
+}
+
+.question {
+  height: 100%;
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+  &_desc {
+    font-size: 16px;
+    border: solid 1px @border-color;
+    background-color: white;
+    p {
+      font-size: 16px;
+      margin: 10px 15px 20px;
+    }
+    &_tips {
+      font-size: 16px;
+      margin: 20px 15px 0px;
+      color: @tips_color;
+    }
+  }
+  &_select {
+    margin: 20px 15px;
+    &_tips {
+      font-size: 16px;
+      margin: 12px 0;
+      color: @tips_color;
+    }
+  }
+
+  &_selected {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 16px;
+    position: relative;
+    i {
+      font-size: 20px;
+      color: @tips_color;
+    }
+  }
+
+  &_next_tip {
+    font-size: 14px;
+    color: #00b7ee;
+    height: 60px;
+    line-height: 60px;
+    bottom: 0px;
+    width: 100%;
+    div {
+      float: right;
+      margin-right: 20px;
+      &:before {
+        content: "<<< ";
+      }
+    }
+  }
+
+}
+
+.@{exam_cls_prefix} {
+  &_header {
+    font-size: 15px;
+    overflow: hidden;
+    height: 35px;
+    line-height: 35px;
+    margin: 0 15px;
+    &_tips {
+      float: left;
+    }
+    &_progress {
+      float: right;
+      &_curr {
+        color: #0c91e5;
+      }
+    }
+  }
+
+  &_button {
+    border: solid 1px @border-color;
+    background-color: white;
+    overflow: hidden;
+    position: fixed;
+    height: 60px;
+    line-height: 60px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    max-width: 800px;
+    margin: auto;
+    button {
+      color: #00b7ee;
+      border-color: #00b7ee;
+      width: 200px;
+      margin: 12px auto;
+      display: block;
+    }
+    &_next {
+      float: right;
+      margin-right: 5%;
+    }
+  }
+}
+
+.entry,.score {
+  padding: 0px 25px 25px;
+  background: #fff;
+  box-shadow: 0px 0px 0px 5px rgba(255, 255, 255, 0.4),
+  0px 4px 20px rgba(0, 0, 0, 0.33);
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  display: table;
+  position: static;
+  width: 95%;
+  margin: 20px auto;
+  &_button {
+    width: 100%;
+    button {
+      margin: auto;
+      color: #00b7ee;
+      border-color: #00b7ee;
+      width: 200px;
+      height: 30px;
+      font-size: 16px;
+      line-height: 16px;
+      display: block;
+    }
+  }
+}
+
+.ant-carousel {
+  height: 100%;
+  width: 100%;
+  .slick-slider, .slick-list, .slick-track {
+    height: 100%;
+    width: 100%;
+  }
+}

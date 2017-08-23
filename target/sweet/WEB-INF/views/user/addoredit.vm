@@ -1,0 +1,101 @@
+<form id="userForm" class="form-horizontal" action="/user/addOrEdit#if($userInfo)?id=$userInfo.id#end" method="post">
+
+    <caption>
+        <br>
+        <ol class="breadcrumb">
+            <li>#if($userInfo)编辑用户信息#else新增用户信息#end</li>
+        </ol>
+    </caption>
+
+    <div class="form-group">
+        <label for="title" class="col-sm-2 control-label">用户名: </label>
+
+        <div class="col-sm-4">
+            #if($userInfo)
+                <input disabled="disabled" type="text" id="username" name="username" class="form-control" placeholder="必填，最长20个字符"
+                       value="$!userInfo.username" maxLength="20" required/>
+            #else
+                <input type="text" id="username" name="username" class="form-control" placeholder="必填，最长20个字符" value="$!userInfo.username"
+                       maxLength="20" required/>
+            #end
+            <div class="alert alert-danger hide" id="checkUsername"></div>
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        <label for="title" class="col-sm-2 control-label">姓名: </label>
+
+        <div class="col-sm-4">
+            <input id="phone" type="text" class="form-control" name="name" value="$!userInfo.name" maxLength="20" required/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="title" class="col-sm-2 control-label">联系电话: </label>
+
+        <div class="col-sm-4">
+            <input id="phone" type="text" class="form-control" name="phone" value="$!userInfo.phone" placeholder="必填" maxLength="20"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="title" class="col-sm-2 control-label">工作单位: </label>
+
+        <div class="col-sm-4">
+            <select name="workDepartment" id="workDepartment" class="form-control">
+                #foreach($workDepartment in $workDepartments)
+                    <option value="$workDepartment.id" #if($workDepartment.id == $userInfo.workDepartment) selected #end>
+                        $workDepartment.name
+                    </option>
+                #end
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="title" class="col-sm-2 control-label">邮箱: </label>
+
+        <div class="col-sm-4">
+            <input id="email" type="text" class="form-control" name="email" value="$!userInfo.email"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div for="title" class="col-sm-4 control-label">
+            <button type="submit" id="submitBtn" class="btn bg-primary">确认</button>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <button id="cancelBtn" type="button" class="btn bg-primary">取消</button>
+        </div>
+    </div>
+
+
+</form>
+
+<script>
+
+    $("#cancelBtn").on("click", function () {
+        window.history.go(-1);
+    });
+
+    $("#username").on("input", function () {
+        $.ajax({
+            type: 'POST',
+            url: '/user/checkUsername',
+            data: $('#userForm').serialize(),
+            dataType: 'json',
+            success: function (result) {
+                if (result.status) {
+                    if (result.status.status_code < 0) {
+                        $("#checkUsername").html(result.status.status_reason).removeClass('hide');
+                        $("#submitBtn").attr("disabled",true);
+                    } else {
+                        $("#checkUsername").html(result.status.status_reason).addClass('hide');
+                        $("#submitBtn").attr("disabled",false);
+                    }
+                }
+            }
+        });
+    });
+
+</script>

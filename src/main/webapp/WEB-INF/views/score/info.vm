@@ -1,0 +1,51 @@
+<form>
+
+    <caption>
+        <br>
+        <ol class="breadcrumb">
+            <li>试卷信息</li>
+        </ol>
+    </caption>
+
+    <div class="form-group">
+        <h3 align="center">$!examination.name - 答卷</h3>
+        <br/>
+        <h5 align="center">答题人:$!userInfo.name
+            状态:#if($!score.submitTime)
+                  已交卷
+            结果:#if($!score.isPass == 1) <label style="color:green">通过</label>
+                      #else <label style="color:red">未通过</label>
+                      #end </h5>
+                #else
+                  <label style="color:red">未交卷</label>
+                #end
+
+
+        <h5 align="center">正确率:$!examination.passCount/$!examination.questionCount 得分: $!score.score</h5>
+        <br/>
+    </div>
+
+    <div>
+      #foreach($question in $!questions)
+          <div class="breadcrumb">
+              <label>$velocityCount、$!question.description</label>
+          </div>
+          <div>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <label>A、$!question.optionA  &nbsp;B、$!question.optionB &nbsp;C、$!question.optionC &nbsp;D、$!question.optionD</label>
+          </div>
+          <div>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <label>(正确答案: $!question.result 学员答案: $!answerMap.get($!question.id)
+                #if($!question.result == $!answerMap.get($!question.id))
+                    判题: <label> <span class="glyphicon glyphicon-ok" style="color:green"></span> </label>
+                #else
+                    判题: <label> <span class="glyphicon glyphicon-remove" style="color:red"></span> </label>
+                #end)
+              </label>
+          </div>
+
+      #end
+    </div>
+
+</form>

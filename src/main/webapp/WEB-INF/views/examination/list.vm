@@ -1,0 +1,62 @@
+<table class="table table-hover" style="margin-left: 35px; width: 95%;">
+
+    <caption>
+        <br>
+        <ol class="breadcrumb">
+            <li>考试列表</li>
+        </ol>
+    </caption>
+
+    <thead>
+    <tr>
+        <th>名称</th>
+##        <th>科目</th>
+##        <th>课时</th>
+        <th>题数</th>
+        <th>需读文章</th>
+        <th>全部学分需读</th>
+        <th>状态</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+        #foreach($examination in $!pagedResult.list)
+        <tr>
+            <td class="col-xs-2">$!examination.name</td>
+##            <td class="col-xs-1">$!examination.subject</td>
+##            <td class="col-sm-1">$!examination.period</td>
+            <td class="col-xs-1">$!examination.questionCount</td>
+            <td class="col-xs-1">$!examination.readLeastCount</td>
+            <td class="col-xs-1">$!examination.readAllCount</td>
+            <td class="col-xs-1">#if($!examination.status == 1) 正常 #elseif($!examination.status == 2) 关闭 #end
+            <td class="col-sm-1" style="min-width: 100px;">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-xs btn-padding btn-link" onclick=" location='/examination/toAddOrEdit?id=$examination.id'">编辑</button>
+                    <button class="btn btn-xs btn-link dropdown-toggle" type="button" id="action$examination.id"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="caret"></span>
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+
+                    <ul class="dropdown-menu">
+                        #if($!examination.status == 1)
+                            <li><a href="/examination/close?id=$examination.id">关闭</a></li>
+                        #elseif($!examination.status == 2)
+                            <li><a href="/examination/open?id=$examination.id">开启</a></li>
+                        #end
+                        <li><a href="/examination/delete?id=$examination.id">删除</a></li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        #end
+    </tbody>
+</table>
+
+<nav>
+    <div class="col-xs-4 col-xs-offset-4">
+    ## 使用分页宏
+        #pagination($pagedResult)
+    </div>
+</nav>
+

@@ -1,0 +1,69 @@
+<table class="table table-hover" style="margin-left: 35px; width: 95%;">
+
+    <caption>
+        <br>
+        <ol class="breadcrumb">
+            <li>#if($workDepartment)编辑单位信息#else新增单位信息#end</li>
+        </ol>
+    </caption>
+
+    <form id="workDepartment" class="form-horizontal" action="/work/addOrEdit#if($workDepartment)?id=$workDepartment.id#end" method="post">
+    <tbody>
+        <tr>
+            <td class="col-xs-1">单位名称: </td>
+            <td class="col-xs-1"><input id="name" type="text" class="input-medium" name="name" value="$!workDepartment.name" maxLength="10" required/></td>
+        </tr>
+        <tr>
+            <td class="col-xs-1">机构编码: </td>
+            <td class="col-xs-1"><input id="code" name="code" class="input-medium" value="$!workDepartment.code"/></td>
+        </tr>
+        <tr>
+            <td class="col-xs-1">所在地区: </td>
+            <td class="col-xs-3">
+                <select id="province" name="province" style="width: 140px;font-size: 14px;font-weight: normal;color: #333333;border: 1px solid #e5e5e5;"></select>
+                <select id="city" name="city" style="width: 140px;font-size: 14px;font-weight: normal;color: #333333;border: 1px solid #e5e5e5;"></select>
+            </td>
+        </tr>
+        <tr>
+            <td class="col-xs-1">详细地址: </td>
+            <td class="col-xs-1">
+                <input style="max-width: 400px" id="address" class="form-control" name="address" maxLength="70" required value="$!workDepartment.address"/>
+            </td>
+        </tr>
+        <tr>
+            <td class="col-xs-1"><button type="submit" class="btn bg-primary">确认</button></td>
+            <td class="col-xs-1"><a class="btn" href="javascript:history.go(-1);">取消</a></td>
+        </tr>
+    </tbody>
+    </form>
+</table>
+
+<script src="/static/lib/cityselect/citydata.js"></script>
+<script>
+    $(function(){
+        //省市级联
+        var citySelected=[11,1101];
+        #if($workDepartment)
+            for(var i=0;i<data.length;i++){
+                if(data[i].name=="$workDepartment.province"){
+                    citySelected[0]=data[i].id;
+                    for(var j=0;j<data[i].cities.length;j++){
+                        if(data[i].cities[j].name=="$workDepartment.city"){
+                            citySelected[1]=data[i].cities[j].id;
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+        #end
+        $('#province, #city').citylist({
+            data    : data,
+            id      : 'id',
+            children: 'cities',
+            name    : 'name',
+            metaTag : 'name',
+            selected: citySelected
+        });
+    });
+</script>

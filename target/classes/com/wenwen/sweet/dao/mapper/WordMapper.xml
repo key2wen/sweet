@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wenwen.sweet.dao.mapper.WordMapper">
+
+    <resultMap type="com.wenwen.sweet.model.Word" id="word_result_map">
+        <result property="id" column="id"/>
+        <result property="word" column="word"/>
+        <result property="type" column="type"/>
+        <result property="status" column="status"/>
+        <result property="ukSymbol" column="uk_symbol"/>
+        <result property="usSymbol" column="us_symbol"/>
+        <result property="ukVoicePath" column="uk_voice_path"/>
+        <result property="usVoicePath" column="us_voice_path"/>
+        <result property="desc" column="desc"/>
+        <result property="example" column="example"/>
+
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+
+    <sql id="word_fields">
+		word, `type`, `status`, uk_symbol, us_symbol, uk_voice_path, us_voice_path, `desc`, example, create_time, update_time
+	</sql>
+
+    <select id="getWord" resultType="com.wenwen.sweet.model.Word" resultMap="word_result_map">
+        select `id`,
+        <include refid="word_fields"/>
+        from sweet_word
+        where id = #{wordId}
+    </select>
+
+    <insert id="insertWord" useGeneratedKeys="true" keyProperty="id">
+        insert into sweet_word
+        (
+        <include refid="word_fields"/>
+        )
+        values(#{word}, #{type}, #{status}, #{ukSymbol}, #{usSymbol}, #{ukVoicePath}, #{usVoicePath}, #{desc}, #{example},
+        now(),now())
+    </insert>
+
+    <update id="updateWord">
+        update sweet_word
+        SET
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="ukSymbol != null">
+                uk_symbol = #{ukSymbol},
+            </if>
+            <if test="usSymbol != null">
+                us_symbol = #{usSymbol},
+            </if>
+            <if test="ukVoicePath != null">
+                uk_voice_path = #{ukVoicePath},
+            </if>
+            <if test="usVoicePath != null">
+                us_voice_path = #{usVoicePath},
+            </if>
+            <if test="desc != null">
+                `desc` = #{desc},
+            </if>
+            <if test="example != null">
+                example = #{example},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            update_time = now()
+        where id = #{id}
+    </update>
+
+    <delete id="deleteWordById">
+		update sweet_word set `status` = 1 where id = #{wordId}
+	</delete>
+
+    <select id="selectWords" resultType="com.wenwen.sweet.model.Word" resultMap="word_result_map">
+        select
+        `id`,
+        <include refid="word_fields"/>
+        from sweet_word
+        where `status` != 1
+        order by update_time desc
+        limit #{offset}, #{size}
+    </select>
+
+    <select id="countWords" resultType="Integer">
+		select count(*) from sweet_word where `status` != 1
+	</select>
+
+
+</mapper>

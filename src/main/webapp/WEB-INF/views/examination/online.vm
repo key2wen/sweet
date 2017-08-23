@@ -1,0 +1,26 @@
+#set($layout="mobile.vm")
+#set($bundle="exam")
+
+<script>
+    window.code = $!code;
+    console.log(window.code);
+    #if($!code == 0)
+        window.questions = $!{questions};
+        console.log(window.questions);
+    #elseif($!code == 3)
+        window.leastRead = $!leastRead;
+        window.hasRead = $!hasRead;
+        console.log(window.leastRead);
+    #elseif($!code == 4)
+        window.score = $!score;
+        console.log(window.score);
+    #end
+
+    #if ($!exam)
+        window.exam = $!exam;
+    #end
+    #if ($!user)
+        window.user = $!user;
+    #end
+
+</script>

@@ -1,0 +1,107 @@
+<form id="examinationForm" class="form-horizontal" action="/examination/addOrEdit#if($examination)?id=$examination.id#end" method="post">
+
+    <caption>
+        <br>
+        <ol class="breadcrumb">
+            <li>#if($examination)编辑考试信息#else新增考试信息#end</li>
+        </ol>
+    </caption>
+
+    <div class="form-group">
+        <label for="title" class="col-sm-2 control-label">考试名称: </label>
+
+        <div class="col-sm-4">
+            <input id="name" name="name" class="form-control" placeholder="必填，最长30个字符" maxLength="30" value="$!examination.name" required/>
+        </div>
+    </div>
+
+    <!--
+    <div class="form-group">
+        <label for="title" class="col-sm-2 control-label">科目: </label>
+
+        <div class="col-sm-4">
+            #if($examination)
+                <input id="phone" type="text" class="form-control" id="subject" name="subject" value="$!examination.subject" maxLength="20"/>
+            #else
+                <input id="phone" type="text" class="form-control" id="subject" name="subject" value="天天微信课" maxLength="20"/>
+            #end
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="title" class="col-sm-2 control-label">课时: </label>
+
+        <div class="col-sm-4">
+            <input id="phone" type="number" class="form-control" id="period" name="period" value="$!examination.period" min=“5” max=“100" required/>
+        </div>
+    </div>
+    -->
+
+    <div class="form-group">
+        <label for="title" class="col-sm-2 control-label">题目个数: </label>
+
+        <div class="col-sm-4">
+            <input #if($examination) disabled="disabled" #end id="questionCount" type="number" class="form-control" id="questionCount" name="questionCount" value="$!examination.questionCount" min="5" max="100" required placeholder="新建后不可修改"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="title" class="col-sm-2 control-label">考试通过: </label>
+
+        <div class="col-sm-4">
+            <input  #if($examination) disabled="disabled" #end id="phone" type="number" class="form-control" id="passCount" name="passCount" value="$!examination.passCount" min="5" max="100" required placeholder="考试通过需回答正确的个数,不可修改"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="title" class="col-sm-2 control-label">需读文章: </label>
+
+        <div class="col-sm-4">
+            <input  #if($examination) disabled="disabled" #end id="readLeastCount" type="number" class="form-control" name="readLeastCount" value="$!examination.readLeastCount" min="20" max="100" placeholder="参加考试至少已读文章个数,不可修改" required/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="title" class="col-sm-2 control-label">全部学分需读: </label>
+
+        <div class="col-sm-4">
+            <input  #if($examination) disabled="disabled" #end id="readAllCount" type="number" class="form-control" name="readAllCount" value="$!examination.readAllCount" min="40" max="200" placeholder="获取全部学分需读文章个数,不可修改" required/>
+        </div>
+    </div>
+
+    <!--
+    <div class="form-group">
+        <label for="title" class="col-sm-2 control-label">开始时间: </label>
+
+        <div class="col-sm-4">
+            <input type="date" class="form-control" id="startTime" name="startTime" value="$!onlydate.format($!examination.startTime)" min=“5” max=“100"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="title" class="col-sm-2 control-label">结束时间: </label>
+
+        <div class="col-sm-4">
+            <input type="date" class="form-control" id="endTime" name="endTime" value="$!onlydate.format($!examination.endTime)" min=“5” max=“100"/>
+        </div>
+    </div>
+    -->
+
+    <div class="form-group">
+        <div for="title" class="col-sm-4 control-label">
+            <button id="cancelBtn" type="button" class="btn bg-primary">取消</button>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="submit" id="submitBtn" class="btn bg-primary">确认</button>
+        </div>
+    </div>
+
+
+</form>
+
+<script>
+
+    $("#cancelBtn").on("click", function () {
+        window.history.go(-1);
+    });
+
+</script>

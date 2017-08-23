@@ -1,0 +1,6 @@
+#set($layout="mobile.vm")
+#set($bundle="register")
+
+<script>
+    window.refUrl = '$!originRefUrl';
+</script>
