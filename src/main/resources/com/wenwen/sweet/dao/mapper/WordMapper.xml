@@ -38,38 +38,39 @@
         (
         <include refid="word_fields"/>
         )
-        values(#{word}, #{type}, #{status}, #{ukSymbol}, #{usSymbol}, #{ukVoicePath}, #{usVoicePath}, #{desc}, #{example},
+        values(#{word}, #{type}, #{status}, #{ukSymbol}, #{usSymbol}, #{ukVoicePath}, #{usVoicePath}, #{desc},
+        #{example},
         now(),now())
     </insert>
 
     <update id="updateWord">
         update sweet_word
         SET
-            <if test="status != null">
-                status = #{status},
-            </if>
-            <if test="ukSymbol != null">
-                uk_symbol = #{ukSymbol},
-            </if>
-            <if test="usSymbol != null">
-                us_symbol = #{usSymbol},
-            </if>
-            <if test="ukVoicePath != null">
-                uk_voice_path = #{ukVoicePath},
-            </if>
-            <if test="usVoicePath != null">
-                us_voice_path = #{usVoicePath},
-            </if>
-            <if test="desc != null">
-                `desc` = #{desc},
-            </if>
-            <if test="example != null">
-                example = #{example},
-            </if>
-            <if test="createTime != null">
-                create_time = #{createTime},
-            </if>
-            update_time = now()
+        <if test="status != null">
+            status = #{status},
+        </if>
+        <if test="ukSymbol != null">
+            uk_symbol = #{ukSymbol},
+        </if>
+        <if test="usSymbol != null">
+            us_symbol = #{usSymbol},
+        </if>
+        <if test="ukVoicePath != null">
+            uk_voice_path = #{ukVoicePath},
+        </if>
+        <if test="usVoicePath != null">
+            us_voice_path = #{usVoicePath},
+        </if>
+        <if test="desc != null">
+            `desc` = #{desc},
+        </if>
+        <if test="example != null">
+            example = #{example},
+        </if>
+        <if test="createTime != null">
+            create_time = #{createTime},
+        </if>
+        update_time = now()
         where id = #{id}
     </update>
 
@@ -91,5 +92,37 @@
 		select count(*) from sweet_word where `status` != 1
 	</select>
 
+    <select id="searchWords" resultType="com.wenwen.sweet.model.Word" resultMap="word_result_map">
+        select
+        `id`,
+        <include refid="word_fields"/>
+        from sweet_word
+        <trim prefix="WHERE" prefixOverrides="and |or" suffixOverrides="and |or">
+            <if test=" word != null and word != '' ">
+                word = #{word} and
+            </if>
+            <if test="status != null">
+                status = #{status} and
+            </if>
+            <if test="ukSymbol != null">
+                uk_symbol = #{ukSymbol} and
+            </if>
+            <if test="usSymbol != null">
+                us_symbol = #{usSymbol} and
+            </if>
+            <if test="ukVoicePath != null">
+                uk_voice_path = #{ukVoicePath} and
+            </if>
+            <if test="usVoicePath != null">
+                us_voice_path = #{usVoicePath} and
+            </if>
+            <if test="desc != null">
+                `desc` = #{desc} and
+            </if>
+            <if test="example != null">
+                example = #{example} and
+            </if>
+        </trim>
+    </select>
 
 </mapper>

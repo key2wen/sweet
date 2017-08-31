@@ -1,9 +1,16 @@
 package com.wenwen.sweet.controller;
 
+import com.wenwen.sweet.auth.Auth;
 import com.wenwen.sweet.commons.JsonWrapper;
 import com.wenwen.sweet.commons.PagedResult;
+import com.wenwen.sweet.convert.WordConvert;
+import com.wenwen.sweet.dao.mapper.WordMapper;
+import com.wenwen.sweet.model.UserInfo;
 import com.wenwen.sweet.model.Word;
+import com.wenwen.sweet.modelvo.WordVO;
 import com.wenwen.sweet.service.WordService;
+import com.wenwen.sweet.util.SweetBusinessException;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -12,8 +19,10 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
+@SessionAttributes("currUser")
 @RequestMapping("/word")
 public class WordController {
 
@@ -36,7 +45,7 @@ public class WordController {
         int ret = wordService.saveWord(word);
         String msg = ret > 0 ? "保存成功" : "保存失败";
         redirectAttributes.addFlashAttribute("msg", msg);
-        return new ModelAndView("redirect:/word/list/1");
+        return new ModelAndView("redirect:/word/list");
     }
 
     @RequestMapping("/edit/{wordId}")
@@ -45,10 +54,11 @@ public class WordController {
         return new ModelAndView("/word/edit", "word", word);
     }
 
+    @Auth(value={UserInfo.RoleType.NON_PAYMENT_USER})
     @RequestMapping("/list")
     public ModelAndView list(Integer pageNum, Integer pageSize) {
         PagedResult<Word> pagedWords = wordService.selectWords(pageNum, pageSize);
-        return new ModelAndView("/word/list", "word", pagedWords);
+        return new ModelAndView("/word/list", "words", pagedWords);
     }
 
     @RequestMapping("/delete/{wordId}")
@@ -57,6 +67,22 @@ public class WordController {
         String msg = ret > 0 ? "删除成功" : "删除失败";
         redirectAttributes.addFlashAttribute("msg", msg);
         return new ModelAndView("redirect:/word/list/1");
+    }
+
+    WordConvert wordConvert = new WordConvert();
+
+
+    @RequestMapping("/mword/{w}")
+    public ModelAndView mword(@PathVariable("w") String w) {
+        Word word = new Word();
+        word.setWord(w);
+        List<Word> wordList = wordService.searchWords(word);
+
+        if (CollectionUtils.isEmpty(wordList)) {
+            throw new SweetBusinessException("暂无该单词:" + w);
+        }
+        WordVO wordVO = wordConvert.toVO(wordList.get(0));
+        return new ModelAndView("/word/mword", "word", wordVO);
     }
 
 }

@@ -76,6 +76,9 @@
     <orderEntry type="library" name="Maven: org.jboss.logging:jboss-logging:3.1.1.GA" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml:classmate:1.0.0" level="project" />
     <orderEntry type="library" name="Maven: javax.validation:validation-api:1.1.0.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient:4.3.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore:4.3.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpmime:4.3.2" level="project" />
     <orderEntry type="library" name="Maven: net.glxn:qrgen:1.4" level="project" />
     <orderEntry type="library" name="Maven: com.google.zxing:javase:3.0.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.zxing:core:3.0.0" level="project" />

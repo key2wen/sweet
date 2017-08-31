@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title> #if($!page_title) $!page_title #else 天天微信课 #end </title>
+    <title> #if($!page_title) $!page_title #else 二维码系统 #end </title>
 
     #parse("import.vm")
     #parse("modal.vm")

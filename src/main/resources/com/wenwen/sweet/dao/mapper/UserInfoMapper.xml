@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wenwen.sweet.dao.mapper.UserInfoMapper">
+
+	<resultMap id="baseResultMap" type="com.wenwen.sweet.model.UserInfo">
+		<result property="workDepartment" column="work_department"/>
+		<result property="roleType" column="roletype"/>
+		<result property="createTime" column="create_time"/>
+		<result property="updateTime" column="update_time"/>
+		<result property="certificatePath" column="certificatepath"/>
+	</resultMap>
+
+	<sql id="fields">
+		id, username,`name`,password,phone,work_department,email,features,roletype,create_time,update_time,status,openid,certificatepath
+	</sql>
+
+    <select id="selectByNameAndPassword" resultMap="baseResultMap">
+        select <include refid="fields"/> from sweet_user_info where username = #{username} and password = #{password}
+    </select>
+
+	<select id="selectCountByNameAndPassword" resultType="Integer">
+		select count(*) from sweet_user_info where username = #{username} and password = #{password} and roletype = 2 and status = 0
+	</select>
+
+	<select id="getUserInfoById" resultMap="baseResultMap">
+		select <include refid="fields"/>  from sweet_user_info where id = #{id} and status = 0
+	</select>
+
+	<select id="selectListByType" resultMap="baseResultMap">
+		select <include refid="fields"/> from sweet_user_info where roletype = #{roleType} and status = 0 limit #{offset},#{limit}
+	</select>
+
+	<select id="countByType" resultType="Integer">
+		select count(*) from sweet_user_info where roletype = #{roleType} and status = 0
+	</select>
+
+	<update id="updateUserStatusById">
+		update sweet_user_info set status = #{status} where id = #{id}
+	</update>
+
+	<insert id="insertUserInfo" useGeneratedKeys="true" keyProperty="id">
+		insert into sweet_user_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="username != null">username,</if>
+			<if test="name != null">name,</if>
+			<if test="password != null">password,</if>
+			<if test="phone != null">phone,</if>
+			<if test="workDepartment != null">work_department,</if>
+			<if test="email != null">email,</if>
+			<if test="features != null">features,</if>
+			<if test="roleType != null">roletype,</if>
+            <if test="openid != null">openid,</if>
+			create_time,update_time
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="username != null">#{username},</if>
+			<if test="name != null">#{name},</if>
+			<if test="password != null">#{password},</if>
+			<if test="phone != null">#{phone},</if>
+			<if test="workDepartment != null">#{workDepartment},</if>
+			<if test="email != null">#{email},</if>
+			<if test="features != null">#{features},</if>
+			<if test="roleType != null">#{roleType},</if>
+            <if test="openid != null">#{openid},</if>
+			<choose>
+				<when test="createTime != null">#{createTime}</when>
+				<otherwise>now(),</otherwise>
+			</choose>
+			<choose>
+				<when test="updateTime != null">#{updateTime}</when>
+				<otherwise>now(),</otherwise>
+			</choose>
+		</trim>
+	</insert>
+
+	<update id="updateUserInfo">
+		update sweet_user_info
+		 <set>
+			 <if test="name != null">name = #{name},</if>
+			 <if test="password != null">password = #{password},</if>
+			 <if test="phone != null">phone = #{phone},</if>
+			 <if test="workDepartment != null">work_department = #{workDepartment},</if>
+			 <if test="email != null">email = #{email},</if>
+			 <if test="features != null">features = #{features},</if>
+			 <if test="roleType != null">roletype = #{roleType},</if>
+             <if test="openid != null">openid = #{openid},</if>
+			 <if test="certificatePath != null">certificatepath = #{certificatePath},</if>
+			 <choose>
+				 <when test="updateTime != null">update_time = #{updateTime}</when>
+				 <otherwise>update_time = now()</otherwise>
+			 </choose>
+		 </set>
+		where id = #{id}
+
+	</update>
+
+
+	<select id="selectCountByName" resultType="Integer">
+		select count(*) from sweet_user_info where username = #{username};
+	</select>
+
+	<select id="selectByOpenid" resultMap="baseResultMap">
+		select <include refid="fields" /> from sweet_user_info where openid=#{openid}
+	</select>
+
+	<select id="getUserInfoByIds" resultMap="baseResultMap">
+		select <include refid="fields"/> from sweet_user_info
+		where id  in
+		<foreach collection="ids" item="id" open="(" close=")" separator=",">
+			#{id}
+		</foreach>
+	</select>
+</mapper>

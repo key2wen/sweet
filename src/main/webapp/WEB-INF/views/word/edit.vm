@@ -1,199 +1,107 @@
-#set($bundle = "article")
-#set($page = "edit")
+<form id="examinationForm" class="form-horizontal" action="/examination/addOrEdit#if($examination)?id=$examination.id#end" method="post">
 
-<script xmlns="http://www.w3.org/1999/html">
-    window.serverRoot = "$!link.getContextURL()";
-</script>
-
-<script type="text/javascript" charset="utf-8" src="/static/lib/ue/ueditor.config.js"></script>
-<script type="text/javascript" charset="utf-8" src="/static/lib/ue/ueditor.all.min.js"></script>
-<script type="text/javascript" charset="utf-8" src="/static/lib/dropzone/dropzone.min.js"></script>
-
-
-<form id="articleForm" class="form-horizontal" role="form" method="post">
-
-##    <input type="hidden" name="id" value="$!article.id"></input>
-
-    <div class="form_head row">
-
-        <div class="form-group col-xs-4">
-            <label for="examinationId" class="col-xs-3">考试:</label>
-            <div class="col-xs-9">
-                <select name="examinationId" id="examinationId" class="selectpicker show-menu-arrow"
-                        data-live-search="true">
-                    #foreach($exam in $exams)
-                        <option value="$exam.id" #if($!article.examinationId == $exam.id) selected #end>
-                            $exam.name
-                        </option>
-                    #end
-                </select>
-            </div>
-        </div>
-
-        <div class="form-group col-xs-4">
-            <label for="endTime" class="col-xs-4">结束时间:</label>
-            <div class="col-xs-8">
-                <input type="date" id="endTime" name="endTime"
-                       value="$!onlydate.format($!article.endTime)">
-            </div>
-        </div>
-    </div>
-
-    <div class="form_oper">
-        <button id="submit" type="submit"
-                class="#if($!article and $!article.state == 1) hidden #end btn btn_submit">
-            提交
-        </button>
-        <button id="save" type="submit" class="btn btn_white">
-            保存
-        </button>
-        <button id="cancel" type="button" class="btn btn_white">
-            取消
-        </button>
-    </div>
-
-    <div class="form_content" style="height: 620px;">
-
-        <input type="hidden" name="id" value="$!article.id"></input>
-        <input type="hidden" id="coverImage" name="coverImage" value="$!article.coverImage"></input>
-
-        <div class="col-sm-12">
-            <input type="text" id="title" name="title" class="title" placeholder="请输入标题"
-                   value="$!article.title"/>
-        </div>
-        <div class="col-sm-2">
-            <input type="text" id="author" name="author" class="author" placeholder="请输入作者"
-                   value="$!article.author">
-        </div>
+    <caption>
         <br>
-        <div id="edit_content" class="col-sm-12">
-            <script id="content" name="content" type="text/plain">
-                #if($!article.id)
-                    #sliteral($!article.content)
-                #else
-                <div style="margin-top: 10px;font-size: 20px;color: #999;">
-                    请输入正文
-                </div>
-                #end
+        <ol class="breadcrumb">
+            <li>#if($examination)编辑考试信息#else新增考试信息#end</li>
+        </ol>
+    </caption>
 
-            </script>
-        </div>
+    <div class="form-group">
+        <label for="title" class="col-sm-2 control-label">考试名称: </label>
 
-    </div>
-
-    <div class="edit_item">
-        <div class="edit_item_div_font">发布样式编辑</div>
-        <div class="edit_item_div">
-            封面 <span class="edit_item_font">大图片建议尺寸：200像素 * 200像素</span>
-            </br>
-        </div>
-        <button class="uploadImage btn btn_white" id="uploadImage" type="submit" style="border-radius: 0; width: 100px;">
-            本地上传
-        </button>
-        <div class="hideImg" style="display: none"></div>
-        <img id="licenseImg" src="$!article.coverImage" >
-        <label id="imageLable">
-        </label>
-
-        <div class="edit_item_desc">
-            <div class="edit_item_div">摘要</div>
-            <textarea id="coverDesc" name="coverDesc" class="edit_item_textarea" placeholder="摘要" maxlength="100">$!article.coverDesc</textarea>
-            <div id="edit_item_num_id" class="edit_item_em">0/100</div>
+        <div class="col-sm-4">
+            <input id="name" name="name" class="form-control" placeholder="必填，最长30个字符" maxLength="30" value="$!examination.name" required/>
         </div>
     </div>
 
+    <!--
+    <div class="form-group">
+        <label for="title" class="col-sm-2 control-label">科目: </label>
+
+        <div class="col-sm-4">
+            #if($examination)
+                <input id="phone" type="text" class="form-control" id="subject" name="subject" value="$!examination.subject" maxLength="20"/>
+            #else
+                <input id="phone" type="text" class="form-control" id="subject" name="subject" value="天天微信课" maxLength="20"/>
+            #end
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="title" class="col-sm-2 control-label">课时: </label>
+
+        <div class="col-sm-4">
+            <input id="phone" type="number" class="form-control" id="period" name="period" value="$!examination.period" min=“5” max=“100" required/>
+        </div>
+    </div>
+    -->
+
+    <div class="form-group">
+        <label for="title" class="col-sm-2 control-label">题目个数: </label>
+
+        <div class="col-sm-4">
+            <input #if($examination) disabled="disabled" #end id="questionCount" type="number" class="form-control" id="questionCount" name="questionCount" value="$!examination.questionCount" min="5" max="100" required placeholder="新建后不可修改"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="title" class="col-sm-2 control-label">考试通过: </label>
+
+        <div class="col-sm-4">
+            <input  #if($examination) disabled="disabled" #end id="phone" type="number" class="form-control" id="passCount" name="passCount" value="$!examination.passCount" min="5" max="100" required placeholder="考试通过需回答正确的个数,不可修改"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="title" class="col-sm-2 control-label">需读文章: </label>
+
+        <div class="col-sm-4">
+            <input  #if($examination) disabled="disabled" #end id="readLeastCount" type="number" class="form-control" name="readLeastCount" value="$!examination.readLeastCount" min="20" max="100" placeholder="参加考试至少已读文章个数,不可修改" required/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="title" class="col-sm-2 control-label">全部学分需读: </label>
+
+        <div class="col-sm-4">
+            <input  #if($examination) disabled="disabled" #end id="readAllCount" type="number" class="form-control" name="readAllCount" value="$!examination.readAllCount" min="40" max="200" placeholder="获取全部学分需读文章个数,不可修改" required/>
+        </div>
+    </div>
+
+    <!--
+    <div class="form-group">
+        <label for="title" class="col-sm-2 control-label">开始时间: </label>
+
+        <div class="col-sm-4">
+            <input type="date" class="form-control" id="startTime" name="startTime" value="$!onlydate.format($!examination.startTime)" min=“5” max=“100"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="title" class="col-sm-2 control-label">结束时间: </label>
+
+        <div class="col-sm-4">
+            <input type="date" class="form-control" id="endTime" name="endTime" value="$!onlydate.format($!examination.endTime)" min=“5” max=“100"/>
+        </div>
+    </div>
+    -->
+
+    <div class="form-group">
+        <div for="title" class="col-sm-4 control-label">
+            <button id="cancelBtn" type="button" class="btn bg-primary">取消</button>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="submit" id="submitBtn" class="btn bg-primary">确认</button>
+        </div>
+    </div>
 
 
 </form>
 
-
-##<form role="form" action="/ueditor?action=uploadimage" enctype="multipart/form-data" method="post">
-##    <div class="form-group">
-##        <label for="inputfile">文件输入</label>
-##        <input type="file" name="inputfile">
-##    </div>
-##
-##    <img src="/upload/image/20160618/1466238986554004579.jpeg">
-##
-##    <button type="submit" class="btn btn-default">提交</button>
-##</form>
-
 <script>
 
-    var toolbars = [
-        ['undo', 'redo', '|', 'horizontal', '|', 'removeformat', 'formatmatch', '|', 'fontfamily', 'fontSize'],
-        ['bold', 'italic', 'underline', 'forecolor', 'backcolor', '|', 'indent', 'justifyleft',
-            'justifycenter', 'justifyright', 'justifyjustify', '|', 'insertorderedlist', 'insertunorderedlist',
-            '|', 'imagenone', 'imageleft', 'imageright', 'imagecenter', '|', 'insertimage', 'insertvideo']
-    ];
-
-    ue = UE.getEditor('content', {
-        toolbars: toolbars,
-        autoHeightEnabled: false,
-        autoFloatEnabled: false,
-        initialFrameHeight: 400,
-        imageScaleEnabled: false,
-        elementPathEnabled: false,
-        autoClearinitialContent: #if($!article.id) false #else true #end,
-        wordCount: false,
-        theme: 'xiaozhan'
+    $("#cancelBtn").on("click", function () {
+        window.history.go(-1);
     });
-
-    var submitted = false;
-    $('#submit').on("click", function () {
-        $('#articleForm').attr("action", "/article/submitArticle");
-        $('#articleForm').submit(function () {
-            submitted = true;
-        });
-    });
-    $('#save').on("click", function () {
-        $('#articleForm').attr("action", "/article/saveArticle");
-        $('#articleForm').submit(function() {
-            submitted = true;
-        });
-    });
-
-    $("#cancel").on("click", function () {
-        Modal.confirm("确认", "确定不保存吗?", function () {
-            window.location = "/article/list/1";
-        });
-    });
-
-    $("#coverDesc").on("keyup", function(){
-        countNum();
-    });
-
-    function countNum(){
-        var length = $("#coverDesc").val().length;
-        if(length <= 0){
-            $("#edit_item_num_id").html("0/100");
-        } else{
-            $("#edit_item_num_id").html(length+"/100");
-        }
-    }
-
-    countNum();
-
-    $(".uploadImage").dropzone({
-        url: "/ueditor?action=uploadimage&needScale=true",
-        paramName : "licenseImage",
-//        maxFilesize: 0.5, // MB
-        dictDefaultMessage :"请选择",
-
-        previewsContainer : ".hideImg",
-        success:function(data){
-            var url = data.xhr.response;
-            var realUrl = JSON.parse(JSON.parse(url)).url;
-            $("#licenseImg").attr("src",realUrl);
-            $("#coverImage").val(realUrl);
-        }
-    });
-
-    window.onbeforeunload = function(event) {
-        if (!submitted) {
-            event.returnValue = "确定不保存直接离开吗?";
-        }
-    }
 
 </script>
-

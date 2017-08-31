@@ -43,7 +43,7 @@ public class Word extends BaseBean {
 
     @Override
     public String toString() {
-        return "Word{" +
+        return "WordVO{" +
                 "word='" + word + '\'' +
                 ", type=" + type +
                 ", status=" + status +
@@ -118,6 +118,14 @@ public class Word extends BaseBean {
 
     public void setExample(String example) {
         this.example = example;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public static class Type {

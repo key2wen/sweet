@@ -47,6 +47,6 @@ public class MD5Utils {
     }
 
     public static void main(String[] args) {
-        System.out.println(md5("000000"));
+        System.out.println(md5("zwh123456"));
     }
 }

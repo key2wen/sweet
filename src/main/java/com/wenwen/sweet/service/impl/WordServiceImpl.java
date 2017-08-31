@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
+
+import java.util.List;
 
 /**
  * 事务默认支持加只读（适用于读操作，写操作需要额外配置 ）
@@ -53,5 +56,10 @@ public class WordServiceImpl implements WordService {
         pagedResult.setList(wordMapper.selectWords(pagedResult.getOffset(), pagedResult.getLimit()));
         pagedResult.setTotal(wordMapper.countWords());
         return pagedResult;
+    }
+
+    public List<Word> searchWords(Word word) {
+        Assert.notNull(word, "单词对象不能为空");
+        return wordMapper.searchWords(word);
     }
 }

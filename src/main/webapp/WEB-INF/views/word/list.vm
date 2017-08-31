@@ -1,24 +1,49 @@
-
 <table class="table table-hover" style="margin-left: 35px; width: 95%;">
     <caption>
         <br>
-        <ol id="wordTab" class="breadcrumb">
-            <li>单词列表</li>
+        <embed height="50" width="100" src="${request.contextPath}/static/horse.mp3">
+
+            <object height="50" width="100" data="${request.contextPath}/static/horse.mp3"></object>
+
+
+            <audio controls>
+                <source src="${request.contextPath}/static/horse.mp3" type="audio/mpeg">
+            ##                <source src="horse.ogg" type="audio/ogg">
+                您的浏览器不支持该音频格式。
+            </audio>
+
+    </caption>
+
+    <caption>
+        <br>
+        <ol class="breadcrumb">
+            <li>单词列表
+            </li>
+
+            <button class="btn btn-default col-xs-offset-6" data-toggle="modal" style=""
+                    data-target="#newWordModal">
+                新增单词
+            </button>
+
+            &nbsp;&nbsp;<input type="text" placeholder="输入单词" class="input-small" id="searchWordName"
+                               name="searchWordName">
+            <button id="searchWordButton" type="" class="btn bg-primary">查询</button>
         </ol>
 
     </caption>
+
     <thead>
     <tr>
         <th>ID</th>
         <th>单词</th>
         <th>类型</th>
-        <th>英式发音音标</th>
-        <th>美式发音音标</th>
+        <th>英式发音标</th>
+        <th>美式发音标</th>
         <th>英式音频</th>
         <th>美式音频</th>
 
-        <th>描述</th>
-        <th>例子</th>
+    ##        <th>描述</th>
+    ##        <th>例子</th>
 
         <th>创建时间</th>
         <th>更新时间</th>
@@ -29,27 +54,34 @@
         #foreach($word in $!words.list)
         <tr>
             <td class="col-xs-1">$!word.id</td>
-            <td class="col-xs-3">
+            <td class="col-xs-1">
 
                 <a href="/word/view/$!word.id" title="$!word.word">
-                        $!{word.word}
+                    $!{word.word}
                 </a>
             </td>
             <td class="col-xs-1">$!word.type</td>
-            <td class="col-xs-1">$!word.ukSymbol</td>
-            <td class="col-xs-1">$!word.usSymbol</td>
-            <td class="col-xs-1">$!word.ukVoicePath</td>
-            <td class="col-xs-1">$!word.usVoicePath</td>
+            <td class="col-xs-2">$!word.ukSymbol</td>
+            <td class="col-xs-2">$!word.usSymbol</td>
 
-            <td class="col-xs-1">$!word.desc</td>
-            <td class="col-xs-1">$!word.example</td>
+            <td><a href="$!word.ukVoicePath"
+                   title="$!word.ukVoicePath"> #if($!word.ukVoicePath.length() > 10)$!word.ukVoicePath.substring(0, 10)
+                ...#else $!word.ukVoicePath #end </a></td>
+            <td><a href="$!word.usVoicePath"
+                   title="$!word.usVoicePath"> #if($!word.usVoicePath.length() > 10)$!word.usVoicePath.substring(0, 10)
+                ...#else $!word.usVoicePath #end </a></td>
+
+
+        ##            <td class="col-xs-3">$!word.desc</td>
+        ##            <td class="col-xs-3">$!word.example</td>
 
 
             <td class="col-xs-2">$!date.format($!word.createTime)</td>
             <td class="col-xs-2">$!date.format($!word.updateTime)</td>
             <td class="col-xs-1">
                 <div class="btn-group">
-                    <button type="button" class="btn btn-xs btn-padding btn-link" onclick="location='/word/edit/$!word.id'">编辑
+                    <button type="button" class="btn btn-xs btn-padding btn-link"
+                            onclick="location='/word/edit/$!word.id'">编辑
                     </button>
                     <button class="btn btn-xs btn-link dropdown-toggle" type="button"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -57,7 +89,7 @@
                         <span class="sr-only">Toggle Dropdown</span>
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a href="/word/delete/$!word.id" data-content="确定删除此文章?">删除</a></li>
+                        <li><a href="/word/delete/$!word.id" data-content="确定删除此单词?">删除</a></li>
                     </ul>
                 </div>
             </td>
@@ -66,6 +98,7 @@
     </tbody>
 </table>
 
+
 <nav>
     <div class="col-xs-4 col-xs-offset-4">
     ## 使用分页宏
@@ -73,8 +106,172 @@
     </div>
 </nav>
 
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="newWordModal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    新增单词
+                </h4>
+            </div>
+            <div class="modal-body">
+
+                <table class="table table-hover" style="margin-left: 35px; width: 95%;">
+
+                    <form id="wordModalForm" class="form-horizontal" action="${request.contextPath}/file/upload/word"
+                          method="post" enctype="multipart/form-data">
+                        <tbody>
+                        <tr>
+                            <td class="col-xs-1">单词:</td>
+                            <td class="col-xs-1"><input id="word" type="text" class="input-medium" name="word" value=""
+                                                        maxLength="50" required/></td>
+                        </tr>
+
+
+                        <tr>
+
+                            <td class="col-xs-2">单词类型：</td>
+                            <td class="col-xs-1">
+                                <select id="type" name="type" class="form-control">
+                                    <option selected value=1>普通单词</option>
+
+                                    <option value=2>国际音标</option>
+                                    <option value=3>中文拼音</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="col-xs-1">英式音标:</td>
+                            <td class="col-xs-1"><input id="ukSymbol" name="ukSymbol" class="input-medium" value="" required/>
+                            </td>
+                            <td class="col-xs-1"><input type="file" name="ukVoicePath"></td>
+                        </tr>
+
+
+                        <tr>
+                            <td class="col-xs-1">美式音标:</td>
+                            <td class="col-xs-1"><input id="usSymbol" name="usSymbol" class="input-medium" value="" required/>
+                            </td>
+                            <td class="col-xs-1"><input type="file" name="usVoicePath"></td>
+                        </tr>
+
+
+                        <tr>
+                            <td class="col-xs-1">描述1:</td>
+                            <td class="col-xs-1"><input id="desc1" type="text" class="input-medium" name="desc1" value=""
+                                                        maxLength="100" required/></td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-1">描述2:</td>
+                            <td class="col-xs-1"><input id="desc2" type="text" class="input-medium" name="desc2" value=""
+                                                        maxLength="100" /></td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-1">描述3:</td>
+                            <td class="col-xs-1"><input id="desc3" type="text" class="input-medium" name="desc3" value=""
+                                                        maxLength="100" /></td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-1">描述4:</td>
+                            <td class="col-xs-1"><input id="desc4" type="text" class="input-medium" name="desc4" value=""
+                                                        maxLength="100" /></td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-1">描述5:</td>
+                            <td class="col-xs-1"><input id="desc5" type="text" class="input-medium" name="desc5" value=""
+                                                        maxLength="100" /></td>
+                        </tr>
+
+                        <tr>
+                            <td class="col-xs-1">例子1:</td>
+                            <td class="col-xs-1"><input id="example1" type="text" class="input-medium" name="example1" value=""
+                                                        maxLength="100" required/></td>
+                            <td class="col-xs-1"><input id="trans1" type="text" class="input-medium" name="trans1" value=""
+                                                        maxLength="100" required/></td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-1">例子2:</td>
+                            <td class="col-xs-1"><input id="example2" type="text" class="input-medium" name="example2" value=""
+                                                        maxLength="100" /></td>
+                            <td class="col-xs-1"><input id="trans2" type="text" class="input-medium" name="trans2" value=""
+                                                        maxLength="100" /></td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-1">例子3:</td>
+                            <td class="col-xs-1"><input id="example3" type="text" class="input-medium" name="example3" value=""
+                                                        maxLength="100" /></td>
+                            <td class="col-xs-1"><input id="trans3" type="text" class="input-medium" name="trans3" value=""
+                                                        maxLength="100" /></td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-1">例子4:</td>
+                            <td class="col-xs-1"><input id="example4" type="text" class="input-medium" name="example4" value=""
+                                                        maxLength="100" /></td>
+                            <td class="col-xs-1"><input id="trans4" type="text" class="input-medium" name="trans4" value=""
+                                                        maxLength="100" /></td>
+                        </tr>
+
+                        <tr>
+                            <td class="col-xs-1">例子5:</td>
+                            <td class="col-xs-1"><input id="example5" type="text" class="input-medium" name="example5" value=""
+                                                        maxLength="100" /></td>
+                            <td class="col-xs-1"><input id="trans5" type="text" class="input-medium" name="trans5" value=""
+                                                        maxLength="100" /></td>
+                        </tr>
+
+                        <tr>
+                            <td class="col-xs-1">
+                                <button type="submit" class="btn btn-default ">确&nbsp; &nbsp;认</button>
+                            </td>
+                            <td class="col-xs-1">
+                                <button id="cancelBtn" type="button" class="btn btn-default ">取&nbsp; &nbsp;消</button>
+                            </td>
+                        </tr>
+                        </tbody>
+
+                    </form>
+                </table>
+
+            </div>
+        #* <div class="modal-footer">
+             <button type="button" class="btn btn-default"
+                     data-dismiss="modal">关闭
+             </button>
+            *##* <button type="button" class="btn btn-primary">
+                 提交
+             </button>*##*
+         </div>*#
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+
+<script>
+    $("#cancelBtn").on("click", function () {
+        $('#newWordModal').modal('hide');
+    });
+
+
+    $("#searchWordButton").on("click"), function () {
+        var searchWord = $("#searchWordName").val();
+        if (searchWord == null || searchWord == undefined || searchWord == "" || searchWord.length == 0) {
+            return;
+        }
+        window.location.href = '${request.contextPath}/word/search?word=' + searchWord;
+    };
+</script>
+
 <script>
     var selectedTab = $('#wordTab a[href="$link.requestPath"]');
     selectedTab.parent().html(selectedTab.html());
 
 </script>
+

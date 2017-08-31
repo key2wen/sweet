@@ -1,3 +1,11 @@
+系统翻译：
+<form action="${request.contextPath}/qrcode/pic" method="post">
+    <p>输入单词：</p>
+    <input name="qrtext" type="text">
+    <input hidden="hidden" name="fanyi" value="system">
+    <input value="生成二维码" type="submit">
+</form>
+
 百度：
 <form action="${request.contextPath}/qrcode/pic" method="post">
     <p>输入单词：</p>

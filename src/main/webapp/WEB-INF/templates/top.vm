@@ -2,7 +2,7 @@
 <nav class="navbar navbar-default navbar-fixed-top">
     <div style="max-width: 1200px;margin: auto">
         <div class="col-md-2">
-            <a class="navbar-brand" href="${request.contextPath}/qrcode/list">二维码后台系统</a>
+            <a class="navbar-brand" href="${request.contextPath}/word/list">二维码后台系统</a>
         </div>
 
         <div id="topInfo" class="hidden alert top-msg col-md-8 text-center">

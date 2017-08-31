@@ -10,7 +10,7 @@
     <meta content="" name="description"/>
     <meta content="" name="author"/>
 
-    <title>天天微信课-登录</title>
+    <title>二维码后台-登陆</title>
 
     <link href="/static/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="/static/login/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
@@ -36,7 +36,7 @@
 
 <div class="content" style="background: url('/static/images/bg-white-lock.png');">
     <form class="login-form" action="/user/login" method="post" id="form">
-        <h3 class="form-title" style="text-align: center">天天微信课</h3>
+        <h3 class="form-title" style="text-align: center">二维码后台</h3>
         <div class="form-group">
             <label class="control-label visible-ie8 visible-ie9">Username</label>
             <div class="input-icon">
@@ -70,7 +70,7 @@
 
 </div>
 <div class="copyright">
-    2016 &copy; 小栈科技
+    2017 &copy; 二维码系统
 </div>
 
 <script src="/static/lib/jquery/jquery.min-1.11.1.js" type="text/javascript"></script>

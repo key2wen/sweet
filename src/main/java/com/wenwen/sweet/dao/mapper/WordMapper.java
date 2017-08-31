@@ -20,4 +20,6 @@ public interface WordMapper {
 
     int countWords();
 
+    List<Word> searchWords(Word word);
+
 }
