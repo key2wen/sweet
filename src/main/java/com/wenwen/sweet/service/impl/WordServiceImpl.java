@@ -5,6 +5,8 @@ import com.wenwen.sweet.dao.mapper.WordMapper;
 import com.wenwen.sweet.model.Word;
 import com.wenwen.sweet.service.WordService;
 import com.wenwen.sweet.util.NumberUtils;
+import com.wenwen.sweet.util.SweetBusinessException;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -25,9 +27,22 @@ public class WordServiceImpl implements WordService {
 
 
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
-    public int saveWord(Word word) {
+    public int saveWord(Word word) throws SweetBusinessException {
         // 如果不带id,说明是第一次保存
         if (!NumberUtils.isPositive(word.getId())) {
+
+            List<Word> list = wordMapper.searchWords(new Word(word.getWord()));
+            if (CollectionUtils.isNotEmpty(list)) {
+                Word oldWord = list.get(0);
+                if (oldWord.getStatus() == Word.Status.DELETED) {
+                    word.setStatus(Word.Status.NORMAL);
+                    word.setId(oldWord.getId());
+                    return wordMapper.updateWord(word);
+                } else {
+                    throw new SweetBusinessException("单词已存在,新增失败");
+                }
+            }
+
             // 第一次保存,插入数据库
             return wordMapper.insertWord(word);
         } else {

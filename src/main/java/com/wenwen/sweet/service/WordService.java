@@ -2,6 +2,7 @@ package com.wenwen.sweet.service;
 
 import com.wenwen.sweet.commons.PagedResult;
 import com.wenwen.sweet.model.Word;
+import com.wenwen.sweet.util.SweetBusinessException;
 
 import java.util.List;
 
@@ -9,7 +10,7 @@ import java.util.List;
 public interface WordService {
 
 
-    int saveWord(Word word);
+    int saveWord(Word word) throws SweetBusinessException;
 
     int deleteWordById(int wordId);
 

@@ -56,6 +56,13 @@ public class Word extends BaseBean {
                 '}';
     }
 
+    public Word(){
+
+    }
+    public Word(String word){
+        this.word = word;
+    }
+
     public String getWord() {
         return word;
     }
@@ -133,6 +140,11 @@ public class Word extends BaseBean {
         public static final int NORMAL = 1;
         public static final int SYMBOL = 2;
         public static final int CHINESE = 3;
+    }
+
+    public static class Status{
+        public static final int DELETED = 1;
+        public static final int NORMAL = 0;
     }
 
 }

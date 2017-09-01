@@ -29,6 +29,8 @@ public class QRCodeController {
     static String youdaoPre = "http://youdao.com/w/";
     static String youdaoAft = "/#keyfrom=dict2.top";
 
+    static String systemPre = "http://localhost:8080/word/mword/";
+
     static String shengmuPre = "http://223.whvip.com/html/shengmu/";
 
     static Map<String, String> shengmuMap = new HashMap<String, String>();
@@ -62,7 +64,7 @@ public class QRCodeController {
         shengmuMap.put("w", "1.html");
     }
 
-    static String BaiduFY = "baidu", YouDaoFY = "youdao", ShengMuFY = "shengmu";
+    static String BaiduFY = "baidu", YouDaoFY = "youdao", ShengMuFY = "shengmu", SystemFY = "system";
 
     Logger logger = LoggerFactory.getLogger(QRCodeController.class);
 
@@ -98,7 +100,10 @@ public class QRCodeController {
 
     private String getValue(String qrtext, String fanyi) {
         qrtext = qrtext.trim();
-        if (BaiduFY.equals(fanyi)) {
+
+        if (SystemFY.equals(fanyi)) {
+            return systemPre + qrtext;
+        } else if (BaiduFY.equals(fanyi)) {
             return baiduPre + qrtext;
         } else if (YouDaoFY.equals(fanyi)) {
             return youdaoPre + qrtext + youdaoAft;

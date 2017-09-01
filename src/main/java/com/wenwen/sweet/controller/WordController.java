@@ -36,14 +36,27 @@ public class WordController {
         return JsonWrapper.buildSuccessResult(word);
     }
 
+    @Auth({UserInfo.RoleType.NON_PAYMENT_USER})
+    @RequestMapping("/testError")
+    public JsonWrapper<Word> testError() {
+        throw new NullPointerException("测试错误处理。。。");
+    }
+
     @RequestMapping("/saveWord")
     public ModelAndView saveWord(@Valid Word word, BindingResult result, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             return new ModelAndView("/word/edit", "word", word)
                     .addObject("errMsg", result.getFieldError().getDefaultMessage());
         }
-        int ret = wordService.saveWord(word);
-        String msg = ret > 0 ? "保存成功" : "保存失败";
+        String msg = null;
+        try {
+            int ret = wordService.saveWord(word);
+            msg = ret > 0 ? "保存成功" : "保存失败";
+        } catch (SweetBusinessException sbe) {
+            // 业务异常，非系统异常，catch自己处理
+            msg = sbe.getMessage();
+        }
+
         redirectAttributes.addFlashAttribute("msg", msg);
         return new ModelAndView("redirect:/word/list");
     }
@@ -51,10 +64,14 @@ public class WordController {
     @RequestMapping("/edit/{wordId}")
     public ModelAndView editWord(@PathVariable("wordId") int wordId) {
         Word word = wordService.getWord(wordId);
-        return new ModelAndView("/word/edit", "word", word);
+        if(word == null){
+
+        }
+        WordVO wordVO = wordConvert.toVO(word);
+        return new ModelAndView("/word/edit", "word", wordVO);
     }
 
-    @Auth(value={UserInfo.RoleType.NON_PAYMENT_USER})
+    @Auth(value = {UserInfo.RoleType.NON_PAYMENT_USER})
     @RequestMapping("/list")
     public ModelAndView list(Integer pageNum, Integer pageSize) {
         PagedResult<Word> pagedWords = wordService.selectWords(pageNum, pageSize);
@@ -66,7 +83,7 @@ public class WordController {
         int ret = wordService.deleteWordById(wordId);
         String msg = ret > 0 ? "删除成功" : "删除失败";
         redirectAttributes.addFlashAttribute("msg", msg);
-        return new ModelAndView("redirect:/word/list/1");
+        return new ModelAndView("redirect:/word/list");
     }
 
     WordConvert wordConvert = new WordConvert();

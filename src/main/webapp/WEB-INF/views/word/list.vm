@@ -56,7 +56,7 @@
             <td class="col-xs-1">$!word.id</td>
             <td class="col-xs-1">
 
-                <a href="/word/view/$!word.id" title="$!word.word">
+                <a href="${request.contextPath}/qrcode/pic?fanyi=system&qrtext=$!{word.word}" title="$!word.word">
                     $!{word.word}
                 </a>
             </td>

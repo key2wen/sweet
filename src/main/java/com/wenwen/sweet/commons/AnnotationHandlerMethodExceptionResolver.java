@@ -1,6 +1,8 @@
 package com.wenwen.sweet.commons;
 
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
+import com.wenwen.sweet.auth.AuthUtils;
+import com.wenwen.sweet.util.SweetBusinessException;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -95,6 +97,17 @@ public class AnnotationHandlerMethodExceptionResolver extends ExceptionHandlerEx
         }
 
         ModelAndView returnValue = new ModelAndView();
+
+        // 业务异常，在error页面显示异常信息
+        if (exception instanceof SweetBusinessException) {
+            returnValue.addObject("errorMsg", exception.getMessage());
+        }
+
+        // 如果是系统权限的用户请求，在页面打印详细信息
+        if (AuthUtils.isSystemAuth(request)) {
+            returnValue.addObject("errorDetailMsg", ExceptionUtils.getFullStackTrace(exception));
+        }
+
         returnValue.setViewName(defaultErrorView);
         return returnValue;
     }

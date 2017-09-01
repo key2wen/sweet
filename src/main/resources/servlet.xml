@@ -32,13 +32,15 @@
     <mvc:view-controller path="/login" view-name="login"/>
     <mvc:view-controller path="/denied" view-name="denied"/>
     <mvc:view-controller path="/error" view-name="error"/>
+    <mvc:view-controller path="/404" view-name="404"/>
     <!--<mvc:view-controller path="/index" view-name="redirect:/article/list/1"/>-->
     <!--<mvc:view-controller path="/article/mlist" view-name="/article/mlist"/>-->
     <!--<mvc:view-controller path="/user/mlogin" view-name="/user/mlogin"/>-->
 
     <mvc:view-controller path="/index" view-name="redirect:/word/list"/>
-    <mvc:view-controller path="/word/mword" view-name="/word/mword"/>
 
+    <!-- (ParameterizableViewController)这种如果在过滤器没有排除，则相当于系统权限 -->
+    <mvc:view-controller path="/word/mword" view-name="/word/mword"/>
     <mvc:view-controller path="/qrcode/list" view-name="/qrcode/generate"/>
 
     <mvc:resources mapping="/static/**" location="/static/"/>
@@ -64,10 +66,14 @@
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
             <mvc:exclude-mapping path="/static/**"/>
+
             <!-- 一级目录全部放行 -->
+            <!--排除: /login, /error, /denied , 不能排除/index,因为／index相当于／word/list-->
             <mvc:exclude-mapping path="/*"/>
+
             <mvc:exclude-mapping path="/user/login"/>
             <mvc:exclude-mapping path="/user/logout"/>
+
             <mvc:exclude-mapping path="/word/mword/**"/>
             <!--<mvc:exclude-mapping path="/user/checkUsername"/>-->
             <!--<mvc:exclude-mapping path="/user/register*"/>-->

@@ -9,7 +9,7 @@ import java.util.List;
  * @date 2016年1月30日
  */
 public class PagedResult<T extends BaseBean> extends ToString {
-    public static final int DEFAULT_PAGE_SIZE = 20;
+    public static final int DEFAULT_PAGE_SIZE = 10;
     public static final int DEFAULT_SHOW_PAGES = 7;
     private List<T> list;
     /** 总数 */

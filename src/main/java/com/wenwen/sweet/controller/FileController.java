@@ -14,6 +14,7 @@ import com.wenwen.sweet.util.JSONUtil;
 import com.wenwen.sweet.util2.JsonUtil;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,7 +80,7 @@ public class FileController {
                 String paraName = iter.next().toString();
                 MultipartFile pFile = multiRequest.getFile(paraName);
 
-                if (pFile != null) {
+                if (pFile != null && pFile.getSize() > 0 && StringUtils.isBlank(pFile.getOriginalFilename())) {
                     String filePath = dir + File.separator + pFile.getOriginalFilename();
                     File file = new File(filePath);
                     //上传

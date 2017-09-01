@@ -113,11 +113,12 @@
                             setTimeout("$('#message').addClass('hide')", 2000);
                         } else {
                             //$('#message').html("登录成功").removeClass('hide');
-                            #if($!originRefUrl.startsWith("/user/logout") || $!originRefUrl.startsWith("/user/login") || $!originRefUrl.startsWith("/login"))
-                                window.location = "/article/list/1";
-                            #else
-                                window.location = '$!originRefUrl';
-                            #end
+##                            #if($!originRefUrl.startsWith("/user/logout") || $!originRefUrl.startsWith("/user/login") || $!originRefUrl.startsWith("/login"))
+##                                window.location = "/word/list";
+##                            #else
+##                                window.location = '$!originRefUrl';
+##                            #end
+                            window.location = "/word/list";
                         }
                     } else {
                         $('#message').html("系统异常，请稍后再试").removeClass('hide');
