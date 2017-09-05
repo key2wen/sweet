@@ -2,7 +2,7 @@
 
 <configuration debug="false" scan="false">
 
-    <property name="logDir" value="${user.home}/logs/hz" />
+    <property name="logDir" value="${user.home}/logs/sweet" />
     <property name="pattern" value="%d{yyyy-MM-dd HH:mm:ss} %-5level %thread [%class:%line] %M - %msg%n"/>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">

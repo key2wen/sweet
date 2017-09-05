@@ -43,10 +43,11 @@ public class MD5Utils {
                 sb.append(Integer.toHexString(x & 0xff));
             }
         }
-        return sb.toString().toUpperCase();
+        return sb.toString();
+//        return sb.toString().toUpperCase();
     }
 
     public static void main(String[] args) {
-        System.out.println(md5("zwh123456"));
+        System.out.println(md5("t8njVjHs"));
     }
 }

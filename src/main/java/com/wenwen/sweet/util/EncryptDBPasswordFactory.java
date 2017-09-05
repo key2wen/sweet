@@ -58,9 +58,9 @@ public final class EncryptDBPasswordFactory implements FactoryBean<String> {
 
     public static void main(String[] args) throws NamingException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, BadPaddingException, IllegalBlockSizeException {
         EncryptDBPasswordFactory encrypt = new EncryptDBPasswordFactory();
-        String secret = "654321";
+        String secret = "Hm654Wenwen123";
         String secText = encrypt.encode(secret);
         System.out.println(secText);
-        System.out.println(encrypt.decode("-ec133055b8e8ed2"));
+        System.out.println(encrypt.decode("-aa252cb6b0cfeb7ef903ae8377c1f37"));
     }
 }

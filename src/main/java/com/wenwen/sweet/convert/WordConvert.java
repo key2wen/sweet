@@ -1,14 +1,10 @@
 package com.wenwen.sweet.convert;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.wenwen.sweet.model.Word;
 import com.wenwen.sweet.modelvo.ExampleVO;
 import com.wenwen.sweet.modelvo.WordVO;
-import javafx.util.Pair;
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.collections.ListUtils;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;

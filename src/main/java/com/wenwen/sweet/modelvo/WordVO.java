@@ -1,11 +1,5 @@
 package com.wenwen.sweet.modelvo;
 
-import com.wenwen.sweet.commons.BaseBean;
-import javafx.util.Pair;
-import org.hibernate.validator.constraints.NotBlank;
-
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.List;
 
 /**
