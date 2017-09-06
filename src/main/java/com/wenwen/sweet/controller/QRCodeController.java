@@ -123,10 +123,12 @@ public class QRCodeController {
         MwordAffix one = list.get(0);
 
         if (dict.equals(ShengMuFY)) {
-            return one.getWordPrefix() + shengmuMap.get(qrtext) + one.getWordSuffix();
+            qrtext = shengmuMap.get(qrtext);
         }
 
-        return one.getWordPrefix() + qrtext + one.getWordSuffix();
+        return (one.getWordPrefix()==null?"":one.getWordPrefix())
+                + qrtext
+                + (one.getWordSuffix() == null ? "" : one.getWordSuffix());
     }
 
     private String getValue(String qrtext, String fanyi) {
