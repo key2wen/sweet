@@ -1,91 +1,138 @@
-<form id="examinationForm" class="form-horizontal" action="/examination/addOrEdit#if($examination)?id=$examination.id#end" method="post">
+<form id="wordEidtForm" class="form-horizontal" action="${request.contextPath}/file/upload/word"
+      method="post" enctype="multipart/form-data">
 
     <caption>
         <br>
         <ol class="breadcrumb">
-            <li>#if($examination)编辑考试信息#else新增考试信息#end</li>
+            <li>#if($word)编辑单词信息 #else 新增单词信息#end</li>
         </ol>
     </caption>
 
-    <div class="form-group">
-        <label for="title" class="col-sm-2 control-label">考试名称: </label>
+    <input hidden id="id" name="id" class="input-medium" value="$!{word.id}"/>
 
-        <div class="col-sm-4">
-            <input id="name" name="name" class="form-control" placeholder="必填，最长30个字符" maxLength="30" value="$!examination.name" required/>
-        </div>
+    <div class="modal-body">
+
+        <table class="table table-hover" style="margin-left: 35px; width: 95%;">
+            <tbody>
+            <tr>
+                <td class="col-xs-1">单词:</td>
+                <td class="col-xs-1"><input id="word" type="text" class="input-medium" name="word" value="$!{word.word}"
+                                            maxLength="50" required/></td>
+            </tr>
+
+            <tr>
+
+                <td class="col-xs-2">单词类型：</td>
+                <td class="col-xs-1">
+                    <select id="type" name="type" class="form-control">
+
+                        <option value=1 #if(${word.type}==1) selected #end >普通单词</option>
+                        <option value=2 #if(${word.type}==2) selected #end >国际音标</option>
+                        <option value=3 #if(${word.type}==3) selected #end>中文拼音</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-xs-1">英式音标:</td>
+                <td class="col-xs-1"><input id="ukSymbol" name="ukSymbol" class="input-medium" value="$!{word.ukSymbol}" required/>
+                </td>
+                <td class="col-xs-1"> 原文件:$!{word.ukVoicePath} <input type="file" name="ukVoicePath"></td>
+            </tr>
+
+
+            <tr>
+                <td class="col-xs-1">美式音标:</td>
+                <td class="col-xs-1"><input id="usSymbol" name="usSymbol" class="input-medium" value="$!{word.usSymbol}" required/>
+                </td>
+                <td class="col-xs-1"> 原文件:$!{word.usVoicePath} <input type="file" name="usVoicePath"></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-xs-1">描述1:</td>
+                <td class="col-xs-1"><input id="desc1" type="text" class="input-medium" name="desc1"
+                    #if(${word.descList} and ${word.descList.size()} > 0) value="$!{word.descList.get(0)}" #end
+                                            maxLength="100" required/></td>
+            </tr>
+            <tr>
+                <td class="col-xs-1">描述2:</td>
+                <td class="col-xs-1"><input id="desc2" type="text" class="input-medium" name="desc2"
+                    #if(${word.descList} and ${word.descList.size()} > 1) value="$!{word.descList.get(1)}" #end
+                                            maxLength="100"/></td>
+            </tr>
+            <tr>
+                <td class="col-xs-1">描述3:</td>
+                <td class="col-xs-1"><input id="desc3" type="text" class="input-medium" name="desc3"
+                    #if(${word.descList} and ${word.descList.size()} > 2) value="$!{word.descList.get(2)}" #end
+                                            maxLength="100"/></td>
+            </tr>
+            <tr>
+                <td class="col-xs-1">描述4:</td>
+                <td class="col-xs-1"><input id="desc4" type="text" class="input-medium" name="desc4"
+                    #if(${word.descList} and ${word.descList.size()} > 3) value="$!{word.descList.get(3)}" #end
+                                            maxLength="100"/></td>
+            </tr>
+            <tr>
+                <td class="col-xs-1">描述5:</td>
+                <td class="col-xs-1"><input id="desc5" type="text" class="input-medium" name="desc5"
+                    #if(${word.descList} and ${word.descList.size()} > 4) value="$!{word.descList.get(4)}" #end
+                                            maxLength="100"/></td>
+            </tr>
+
+            <tr>
+                <td class="col-xs-1">例子1:</td>
+                <td class="col-xs-1"><input id="example1" type="text" class="input-medium" name="example1"
+                    #if(${word.exampleList} and ${word.exampleList.size()} > 0) value="$!{word.exampleList.get(0).val}" #end
+                                            maxLength="100" required/></td>
+                <td class="col-xs-1"><input id="trans1" type="text" class="input-medium" name="trans1"
+                    #if(${word.exampleList} and ${word.exampleList.size()} > 0) value="$!{word.exampleList.get(0).trans}" #end
+                                            maxLength="100" required/></td>
+            </tr>
+            <tr>
+                <td class="col-xs-1">例子2:</td>
+                <td class="col-xs-1"><input id="example2" type="text" class="input-medium" name="example2"
+                    #if(${word.exampleList} and ${word.exampleList.size()} > 1) value="$!{word.exampleList.get(1).val}" #end
+                                            maxLength="100"/></td>
+                <td class="col-xs-1"><input id="trans2" type="text" class="input-medium" name="trans2"
+                    #if(${word.exampleList} and ${word.exampleList.size()} > 1) value="$!{word.exampleList.get(1).trans}" #end
+                                            maxLength="100"/></td>
+            </tr>
+            <tr>
+                <td class="col-xs-1">例子3:</td>
+                <td class="col-xs-1"><input id="example3" type="text" class="input-medium" name="example3"
+                    #if(${word.exampleList} and ${word.exampleList.size()} > 2) value="$!{word.exampleList.get(2).val}" #end
+                                            maxLength="100"/></td>
+                <td class="col-xs-1"><input id="trans3" type="text" class="input-medium" name="trans3"
+                    #if(${word.exampleList} and ${word.exampleList.size()} > 2) value="$!{word.exampleList.get(2).trans}" #end
+                                            maxLength="100"/></td>
+            </tr>
+            <tr>
+                <td class="col-xs-1">例子4:</td>
+                <td class="col-xs-1"><input id="example4" type="text" class="input-medium" name="example4"
+                    #if(${word.exampleList} and ${word.exampleList.size()} > 3) value="$!{word.exampleList.get(3).val}" #end
+                                            maxLength="100"/></td>
+                <td class="col-xs-1"><input id="trans4" type="text" class="input-medium" name="trans4"
+                    #if(${word.exampleList} and ${word.exampleList.size()} > 3) value="$!{word.exampleList.get(3).trans}" #end
+                                            maxLength="100"/></td>
+            </tr>
+
+            <tr>
+                <td class="col-xs-1">例子5:</td>
+                <td class="col-xs-1"><input id="example5" type="text" class="input-medium" name="example5"
+                    #if(${word.exampleList} and ${word.exampleList.size()} > 4) value="$!{word.exampleList.get(4).val}" #end
+                                            maxLength="100"/></td>
+                <td class="col-xs-1"><input id="trans5" type="text" class="input-medium" name="trans5"
+                    #if(${word.exampleList} and ${word.exampleList.size()} > 4) value="$!{word.exampleList.get(4).trans}" #end
+                                            maxLength="100"/></td>
+            </tr>
+
+            </tbody>
+
+        </table>
+
     </div>
-
-    <!--
-    <div class="form-group">
-        <label for="title" class="col-sm-2 control-label">科目: </label>
-
-        <div class="col-sm-4">
-            #if($examination)
-                <input id="phone" type="text" class="form-control" id="subject" name="subject" value="$!examination.subject" maxLength="20"/>
-            #else
-                <input id="phone" type="text" class="form-control" id="subject" name="subject" value="天天微信课" maxLength="20"/>
-            #end
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label for="title" class="col-sm-2 control-label">课时: </label>
-
-        <div class="col-sm-4">
-            <input id="phone" type="number" class="form-control" id="period" name="period" value="$!examination.period" min=“5” max=“100" required/>
-        </div>
-    </div>
-    -->
-
-    <div class="form-group">
-        <label for="title" class="col-sm-2 control-label">题目个数: </label>
-
-        <div class="col-sm-4">
-            <input #if($examination) disabled="disabled" #end id="questionCount" type="number" class="form-control" id="questionCount" name="questionCount" value="$!examination.questionCount" min="5" max="100" required placeholder="新建后不可修改"/>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label for="title" class="col-sm-2 control-label">考试通过: </label>
-
-        <div class="col-sm-4">
-            <input  #if($examination) disabled="disabled" #end id="phone" type="number" class="form-control" id="passCount" name="passCount" value="$!examination.passCount" min="5" max="100" required placeholder="考试通过需回答正确的个数,不可修改"/>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label for="title" class="col-sm-2 control-label">需读文章: </label>
-
-        <div class="col-sm-4">
-            <input  #if($examination) disabled="disabled" #end id="readLeastCount" type="number" class="form-control" name="readLeastCount" value="$!examination.readLeastCount" min="20" max="100" placeholder="参加考试至少已读文章个数,不可修改" required/>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label for="title" class="col-sm-2 control-label">全部学分需读: </label>
-
-        <div class="col-sm-4">
-            <input  #if($examination) disabled="disabled" #end id="readAllCount" type="number" class="form-control" name="readAllCount" value="$!examination.readAllCount" min="40" max="200" placeholder="获取全部学分需读文章个数,不可修改" required/>
-        </div>
-    </div>
-
-    <!--
-    <div class="form-group">
-        <label for="title" class="col-sm-2 control-label">开始时间: </label>
-
-        <div class="col-sm-4">
-            <input type="date" class="form-control" id="startTime" name="startTime" value="$!onlydate.format($!examination.startTime)" min=“5” max=“100"/>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label for="title" class="col-sm-2 control-label">结束时间: </label>
-
-        <div class="col-sm-4">
-            <input type="date" class="form-control" id="endTime" name="endTime" value="$!onlydate.format($!examination.endTime)" min=“5” max=“100"/>
-        </div>
-    </div>
-    -->
 
     <div class="form-group">
         <div for="title" class="col-sm-4 control-label">

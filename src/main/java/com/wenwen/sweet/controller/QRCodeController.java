@@ -5,17 +5,23 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.wenwen.sweet.model.MwordAffix;
+import com.wenwen.sweet.service.MwordAffixService;
+import com.wenwen.sweet.util.SweetBusinessException;
 import net.glxn.qrgen.QRCode;
 import net.glxn.qrgen.image.ImageType;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -64,6 +70,9 @@ public class QRCodeController {
         shengmuMap.put("w", "1.html");
     }
 
+    @Autowired
+    private MwordAffixService mwordAffixService;
+
     static String BaiduFY = "baidu", YouDaoFY = "youdao", ShengMuFY = "shengmu", SystemFY = "system";
 
     Logger logger = LoggerFactory.getLogger(QRCodeController.class);
@@ -83,7 +92,8 @@ public class QRCodeController {
         }
         logger.info("开始生成：value：{},fanyi:{}", qrtext, fanyi);
 
-        String realQrValue = getValue(qrtext, fanyi);
+        //先默认查普通单词
+        String realQrValue = getValue(qrtext, fanyi, 1);
 
         ByteArrayOutputStream out = QRCode.from(realQrValue).to(ImageType.PNG).stream();
 
@@ -98,7 +108,30 @@ public class QRCodeController {
         outStream.close();
     }
 
+
+    private String getValue(String qrtext, String dict, Integer type) {
+
+        qrtext = qrtext.trim();
+
+        MwordAffix mwordAffix = new MwordAffix();
+        mwordAffix.setDict(dict);
+        mwordAffix.setType(type);
+        List<MwordAffix> list = mwordAffixService.searchMwordAffixs(mwordAffix);
+        if (CollectionUtils.isEmpty(list)) {
+            throw new SweetBusinessException("词典不存在,type=" + type + ",dict=" + dict);
+        }
+        MwordAffix one = list.get(0);
+
+        if (dict.equals(ShengMuFY)) {
+            return one.getWordPrefix() + shengmuMap.get(qrtext) + one.getWordSuffix();
+        }
+
+        return one.getWordPrefix() + qrtext + one.getWordSuffix();
+    }
+
     private String getValue(String qrtext, String fanyi) {
+
+
         qrtext = qrtext.trim();
 
         if (SystemFY.equals(fanyi)) {

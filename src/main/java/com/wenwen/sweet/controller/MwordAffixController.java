@@ -4,17 +4,21 @@ import com.wenwen.sweet.auth.Auth;
 import com.wenwen.sweet.commons.JsonWrapper;
 import com.wenwen.sweet.commons.PagedResult;
 import com.wenwen.sweet.convert.WordConvert;
-import com.wenwen.sweet.dao.mapper.WordMapper;
+import com.wenwen.sweet.model.MwordAffix;
 import com.wenwen.sweet.model.UserInfo;
 import com.wenwen.sweet.model.Word;
 import com.wenwen.sweet.modelvo.WordVO;
+import com.wenwen.sweet.service.MwordAffixService;
 import com.wenwen.sweet.service.WordService;
 import com.wenwen.sweet.util.SweetBusinessException;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -23,11 +27,14 @@ import java.util.List;
 
 @Controller
 @SessionAttributes("currUser")
-@RequestMapping("/word")
-public class WordController {
+@RequestMapping("/mwordaffix")
+public class MwordAffixController {
 
     @Autowired
     private WordService wordService;
+
+    @Autowired
+    private MwordAffixService mwordAffixService;
 
     @ResponseBody
     @RequestMapping("/test")
@@ -74,8 +81,8 @@ public class WordController {
     @Auth(value = {UserInfo.RoleType.NON_PAYMENT_USER})
     @RequestMapping("/list")
     public ModelAndView list(Integer pageNum, Integer pageSize) {
-        PagedResult<Word> pagedWords = wordService.selectWords(pageNum, pageSize);
-        return new ModelAndView("/word/list", "words", pagedWords);
+        PagedResult<MwordAffix> pagedWords = mwordAffixService.selectMwordAffixs(pageNum, pageSize);
+        return new ModelAndView("/mwordaffix/list", "mwordaffix", pagedWords);
     }
 
     @RequestMapping("/delete/{wordId}")

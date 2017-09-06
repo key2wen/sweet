@@ -14,6 +14,7 @@ import java.util.List;
  */
 public class WordAO {
 
+    private Integer id;
 
     private String word;
 
@@ -52,6 +53,13 @@ public class WordAO {
     private String trans4;
     private String trans5;
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getWord() {
         return word;

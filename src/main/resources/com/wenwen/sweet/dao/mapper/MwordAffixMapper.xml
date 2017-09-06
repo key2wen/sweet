@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wenwen.sweet.dao.mapper.MwordAffixMapper">
+
+    <resultMap type="com.wenwen.sweet.model.MwordAffix" id="mword_affix_result_map">
+        <result property="id" column="id"/>
+
+        <result property="type" column="type"/>
+        <result property="dict" column="dict"/>
+        <result property="wordPrefix" column="word_prefix"/>
+        <result property="wordSuffix" column="word_suffix"/>
+
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+
+    <sql id="mword_affix_fields">
+		`type`, `dict`, word_prefix, word_suffix, create_time, update_time
+	</sql>
+
+    <select id="getMwordAffix" resultType="com.wenwen.sweet.model.MwordAffix" resultMap="mword_affix_result_map">
+        select `id`,
+        <include refid="mword_affix_fields"/>
+        from sweet_mword_pre
+        where id = #{mwordAffixId}
+    </select>
+
+    <insert id="insertMwordAffix" useGeneratedKeys="true" keyProperty="id">
+        insert into sweet_mword_pre
+        (
+        <include refid="mword_affix_fields"/>
+        )
+        values(#{type}, #{dict}, #{wordPrefix}, #{wordSuffix}, now(), now())
+    </insert>
+
+    <update id="updateMwordAffix">
+        update sweet_mword_pre
+        SET
+        <if test="type != null">
+            type = #{type},
+        </if>
+        <if test="dict != null">
+            dict = #{dict},
+        </if>
+        <if test="wordPrefix != null">
+            word_prefix = #{wordPrefix},
+        </if>
+        <if test="wordSuffix != null">
+            word_suffix = #{wordSuffix},
+        </if>
+        <if test="createTime != null">
+            create_time = #{createTime},
+        </if>
+        update_time = now()
+        where id = #{id}
+    </update>
+
+    <delete id="deleteMwordAffixById">
+        delete from sweet_mword_pre where id = #{mwordAffixId}
+	</delete>
+
+    <select id="selectMwordAffixs" resultType="com.wenwen.sweet.model.MwordAffix" resultMap="mword_affix_result_map">
+        select
+        `id`,
+        <include refid="mword_affix_fields"/>
+        from sweet_mword_pre
+        order by update_time desc
+        limit #{offset}, #{size}
+    </select>
+
+    <select id="countMwordAffixs" resultType="Integer">
+		select count(*) from sweet_mword_pre
+	</select>
+
+    <select id="searchMwordAffixs" resultType="com.wenwen.sweet.model.MwordAffix" resultMap="mword_affix_result_map">
+        select
+        `id`,
+        <include refid="mword_affix_fields"/>
+        from sweet_mword_pre
+        <trim prefix="WHERE" prefixOverrides="and |or" suffixOverrides="and |or">
+            <if test=" type != null ">
+                `type` = #{type} and
+            </if>
+            <if test="dict != null">
+                dict = #{dict} and
+            </if>
+            <if test="wordPrefix != null">
+                word_prefix = #{wordPrefix} and
+            </if>
+            <if test="wordSuffix != null">
+                word_suffix = #{wordSuffix} and
+            </if>
+        </trim>
+    </select>
+
+</mapper>
