@@ -15,10 +15,10 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no">
 
-    <link rel="stylesheet" href="${request.contextPath}/static/wordQrCode_files/common.css" type="text/css"
+    <link rel="stylesheet" href="${request.contextPath}/static/qrcode/common.css" type="text/css"
           media="screen">
 
-    <script src="${request.contextPath}/static/wordQrCode_files/jq.js"></script>
+    <script src="${request.contextPath}/static/qrcode/jq.js"></script>
 </head>
 
 <body>
@@ -156,15 +156,15 @@
 
 <div class="head_box">
     <div class="home_top">
-        <a href="#"><img src="/static/wordQrCode_files/logo.png" class="logo"></a>
+        <a href="#"><img src="/static/images/logo.png" class="logo"></a>
 
     </div>
 </div>
 <div class="anniu">
     <div class="anniuleft">
-        <!--<a class="clr1" href=#><img src="./wordQrCode_files/home.jpg">-->
+        <!--<a class="clr1" href=#><img src="./qrcode/home.jpg">-->
         <!--<p>首页</p></a>-->
-        <!--<a class="clr1" href="http://kenglishvip.com/index.php?m=App&TypeID="><img src="./wordQrCode_files/bak.jpg">-->
+        <!--<a class="clr1" href="http://kenglishvip.com/index.php?m=App&TypeID="><img src="./qrcode/bak.jpg">-->
         <!--<p>返回</p></a>-->
     </div>
     <div class="anniuright">
