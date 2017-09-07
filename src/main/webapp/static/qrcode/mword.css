@@ -1,0 +1,88 @@
+@charset "utf-8";
+.read_class {
+    display: inline-block;
+    position: relative;
+    top: 2px;
+    left: 4px;
+    margin-top: -2px;
+}
+
+.go_read_class, .play_read_class {
+    width: 22px;
+    height: 23px;
+    overflow: hidden;
+    background: url("/static/images/mword_voice_pic.png") no-repeat;
+    background-size: cover;
+    text-decoration: none;
+    margin-right: 0px;
+    margin-top: 0px;
+    _margin-top: 11px;
+}
+
+.voice_class {
+    background: url("/static/images/mword_voice_pic.png") no-repeat;
+    background-size: cover;
+}
+
+
+
+.anniu {
+    width: 98%;
+    margin-left: 1%;
+    float: left;
+    padding-bottom: 2%;
+    border-bottom: 1px dashed #39b2f1;
+}
+
+.anniuleft {
+    width: 50%;
+    float: left;
+    margin-top: 5%;
+}
+
+.anniuleft a {
+    width: 30%;
+    float: left;
+    color: #000;
+    height: auto;
+    margin-top: 2%;
+    padding: 1.5%;
+    padding-bottom: 0px;
+    margin-left: 8%;
+    margin-right: 5%
+}
+
+.anniuleft a img {
+    float: left;
+    width: 100%;
+}
+
+.anniuleft a p {
+    width: 100%;
+    float: left;
+    font-size: 18px;
+    margin-top: 0px;
+    text-align: center;
+}
+
+.anniuright {
+    width: 40%;
+    float: right;
+    margin-top: 8%;
+}
+
+.anniuright a {
+    width: 35%;
+    float: left;
+    color: #000;
+    height: auto;
+    margin-top: 2%;
+    padding: 1.5%;
+    padding-bottom: 0px;
+    margin-right: 10%;
+}
+
+.anniuright a img {
+    float: left;
+    width: 100%;
+}

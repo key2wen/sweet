@@ -15,129 +15,37 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no">
 
-    <link rel="stylesheet" href="${request.contextPath}/static/qrcode/common.css" type="text/css"
-          media="screen">
+    <link rel="stylesheet" href="${request.contextPath}/static/qrcode/common_mword.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="${request.contextPath}/static/qrcode/mword.css" type="text/css">
 
     <script src="${request.contextPath}/static/qrcode/jq.js"></script>
 </head>
 
 <body>
-<style type="text/css">
-    .op_dict3_liju_read {
-        display: inline-block;
-        position: relative;
-        top: 2px;
-        left: 4px;
-        margin-top: -2px;
-    }
-
-    .op_dict3_how_read, .op_dict3_mp3_play {
-        width: 22px;
-        height: 23px;
-        overflow: hidden;
-        /*   background: url("images/danci/newsearch_ico.png") no-repeat;*/
-        background: url("${request.contextPath}/static/images/mword_voice_pic.png") no-repeat;
-        background-size: cover;
-        text-decoration: none;
-        margin-right: 0px;
-        margin-top: 0px;
-        _margin-top: 11px;
-    }
-
-    .op_m {
-        background: url("${request.contextPath}/static/images/mword_voice_pic.png") no-repeat;
-        background-size: cover;
-    }
-</style>
-
-<style>
-
-
-    .anniu {
-        width: 98%;
-        margin-left: 1%;
-        float: left;
-        padding-bottom: 2%;
-        border-bottom: 1px dashed #39b2f1;
-    }
-
-    .anniuleft {
-        width: 50%;
-        float: left;
-        margin-top: 5%;
-    }
-
-    .anniuleft a {
-        width: 30%;
-        float: left;
-        color: #000;
-        height: auto;
-        margin-top: 2%;
-        padding: 1.5%;
-        padding-bottom: 0px;
-        margin-left: 8%;
-        margin-right: 5%
-    }
-
-    .anniuleft a img {
-        float: left;
-        width: 100%;
-    }
-
-    .anniuleft a p {
-        width: 100%;
-        float: left;
-        font-size: 18px;
-        margin-top: 0px;
-        text-align: center;
-    }
-
-    .anniuright {
-        width: 40%;
-        float: right;
-        margin-top: 8%;
-    }
-
-    .anniuright a {
-        width: 35%;
-        float: left;
-        color: #000;
-        height: auto;
-        margin-top: 2%;
-        padding: 1.5%;
-        padding-bottom: 0px;
-        margin-right: 10%;
-    }
-
-    .anniuright a img {
-        float: left;
-        width: 100%;
-    }
-</style>
 
 <script type="text/javascript">
     $(function () {
         var width = $(window).width();
         var tableWidth = $("#__01").width();
-        $("#txtZhong").css("width", tableWidth);
+        $("#viewBodyId").css("width", tableWidth);
 
-        $("a.op_dict3_how_read").live("click", function (e) {
+        $("a.go_read_class").live("click", function (e) {
             playmic($(this).attr("url"), $(this).attr("fd"));
         });
     });
 
-    //http://dict.youdao.com/dictvoice?audio=Request.QueryString["WordName"]
+    ####http://dict.youdao.com/dictvoice?audio=Request.QueryString["WordName"]
     function playmic(text, fd) {
         //alert(fd);
         if (fd != 'uk') {
             fd = 'en';
         }
 
-        displayAudio('http://fanyi.baidu.com/gettts?lan=' + fd + '&text=' + text + '.&spd=2&source=alading')
+        display('http://fanyi.baidu.com/gettts?lan=' + fd + '&text=' + text + '.&spd=2&source=alading')
     }
 
 
-    function displayAudio(e) {
+    function display(e) {
         var old = $('<audio src="' + e + '"></audio>')[0];
         var o = document.createElement("audio");
 
@@ -162,10 +70,10 @@
 </div>
 <div class="anniu">
     <div class="anniuleft">
-        <!--<a class="clr1" href=#><img src="./qrcode/home.jpg">-->
-        <!--<p>首页</p></a>-->
-        <!--<a class="clr1" href="http://kenglishvip.com/index.php?m=App&TypeID="><img src="./qrcode/bak.jpg">-->
-        <!--<p>返回</p></a>-->
+        ##<!--<a class="clr1" href=#><img src="./qrcode/home.jpg">-->
+        ##<!--<p>首页</p></a>-->
+        ##<!--<a class="clr1" href="http://kenglishvip.com/index.php?m=App&TypeID="><img src="./qrcode/bak.jpg">-->
+        ##<!--<p>返回</p></a>-->
     </div>
     <div class="anniuright">
     </div>
@@ -176,18 +84,15 @@
 
         <p>$!{word.word}</p>
 
-    ##        <td class="col-xs-2">$!word.ukSymbol</td>
-    ##        <td class="col-xs-2">$!word.usSymbol</td>
-
         <br/>
 
         <span style="font-size:18px;color:#333">
             $!{word.ukSymbol}
 
             #if(${word.ukVoicePath} && ${word.ukVoicePath} != "")
-                <a fd="uk" class="op_dict3_how_read op_dict3_liju_read" url="${word.ukVoicePath}" href="javascript:;"></a>
+                <a fd="uk" class="go_read_class read_class" url="${word.ukVoicePath}" href="javascript:;"></a>
             #else
-                <a fd="uk" class="op_dict3_how_read op_dict3_liju_read"
+                <a fd="uk" class="go_read_class read_class"
                     url="http://fanyi.baidu.com/gettts?lan=uk&text=$!{word.word}.&spd=2&source=alading" href="javascript:;"></a>
             #end
         </span>
@@ -197,9 +102,9 @@
             $!{word.usSymbol}
 
             #if(${word.usVoicePath} && ${word.usVoicePath} != "")
-                <a fd="en" class="op_dict3_how_read op_dict3_liju_read" url="${word.usVoicePath}" href="javascript:;"></a>
+                <a fd="en" class="go_read_class read_class" url="${word.usVoicePath}" href="javascript:;"></a>
             #else
-                <a fd="en" class="op_dict3_how_read op_dict3_liju_read"
+                <a fd="en" class="go_read_class read_class"
                    url="http://fanyi.baidu.com/gettts?lan=en&text=$!{word.word}.&spd=2&source=alading" href="javascript:;"></a>
             #end
         </span>
@@ -207,7 +112,7 @@
     </div>
 
     <div class="clear"></div>
-    <div class="view_body" id="txtZhong">
+    <div class="view_body" id="viewBodyId">
 
         #foreach(${desc} in $!{word.descList})
             <p style="">$!{desc}</p>
@@ -215,7 +120,7 @@
 
         <p style="font-weight:bold;padding-bottom:8px; margin-top:20px; font-size:18px;">双语句例：<br></p>
         #foreach($!{exam} in $!{word.exampleList})
-            <p>$!{exam.val} <a class="op_dict3_how_read op_dict3_liju_read op_m"
+            <p>$!{exam.val} <a class="go_read_class read_class voice_class"
                                url="http://fanyi.baidu.com/gettts?lan=en&text=$!{exam.val} .&spd=2&source=alading"
                                href="javascript:;"></a>
             </p>
