@@ -82,7 +82,7 @@
 <div class="wapper">
     <div class="view_title" id="ipDanci">
 
-        <p>$!{word.word}</p>
+        <p style="color: #00b7ee;">$!{word.word}</p>
 
         <br/>
 
