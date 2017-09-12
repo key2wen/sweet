@@ -11,7 +11,7 @@
     width: 22px;
     height: 23px;
     overflow: hidden;
-    background: url("/static/images/mword_voice_1.png") no-repeat;
+    background: url("/static/images/mword_voice_hm.png") no-repeat;
     background-size: cover;
     text-decoration: none;
     margin-right: 0px;
@@ -20,7 +20,7 @@
 }
 
 .voice_class {
-    background: url("/static/images/mword_voice_1.png") no-repeat;
+    background: url("/static/images/mword_voice_hm.png") no-repeat;
     background-size: cover;
 }
 
@@ -31,7 +31,7 @@
     margin-left: 1%;
     float: left;
     padding-bottom: 2%;
-    border-bottom: 1px dashed #39b2f1;
+    border-bottom: 1px dashed #1D3AAD;
 }
 
 .anniuleft {

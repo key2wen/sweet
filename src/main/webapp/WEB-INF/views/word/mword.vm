@@ -64,7 +64,7 @@
 
 <div class="head_box">
     <div class="home_top">
-        <a href="#"><img src="/static/images/logo.png" class="logo"></a>
+        <a href="#"><img src="/static/images/logo_hm_80.png" class="logo"></a>
 
     </div>
 </div>
@@ -82,7 +82,7 @@
 <div class="wapper">
     <div class="view_title" id="ipDanci">
 
-        <p style="color: #00b7ee;">$!{word.word}</p>
+        <p style="color: #1D3AAD;">$!{word.word}</p>
 
         <br/>
 
