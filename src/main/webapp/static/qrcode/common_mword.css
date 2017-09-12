@@ -116,9 +116,9 @@ font-weight:bold;
 
 }
 
-.head_box{ width:100%; height:100%; float:left; position:relative; padding-bottom:1%; background:#1D3AAD}
-.head_box .home_top{ width:100%; float:left; margin-top:1%; margin-left:0.5%; background:#1D3AAD}
-.head_box .home_top .logo{ width:34%; margin-top:0px; float:left;overflow: hidden; }
+.head_box{ width:100%; height:100%; float:left; position:relative; padding-bottom:5%; background:#1D3AAD}
+.head_box .home_top{ width:99.5%; float:left; margin-top:1%; margin-left:0.5%; background:#1D3AAD}
+.head_box .home_top .logo{ width:34%; margin-top:0px; float:left; }
 
 .head_box .home_top .fr{ float:right; height:26px; width:58%; border:5px solid #fff; border-radius:5px; color:#000; line-height:30px; background:#fff; border:2px solid #1D3AAD; margin-right:2%; margin-top:0px;}
 .head_box .home_top .fr input{ float:left; height:20px; width:70%; text-indent:5%; color:#1D3AAD; line-height:16px; border:0px; margin-right:2%; margin-top:4px; font-size:14px;}
