@@ -74,6 +74,8 @@
             <mvc:exclude-mapping path="/user/login"/>
             <mvc:exclude-mapping path="/user/logout"/>
 
+            <mvc:exclude-mapping path="/weixin/**"/>
+
             <mvc:exclude-mapping path="/word/mword/**"/>
             <!--<mvc:exclude-mapping path="/user/checkUsername"/>-->
             <!--<mvc:exclude-mapping path="/user/register*"/>-->
