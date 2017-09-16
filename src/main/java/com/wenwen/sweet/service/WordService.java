@@ -18,7 +18,7 @@ public interface WordService {
 
     Word getWord(int wordId);
 
-    PagedResult<Word> selectWords(Integer pageNum, Integer pageSize);
+    PagedResult<Word> selectWords(Integer pageNum, Integer pageSize, Word word);
 
     List<Word> searchWords(Word word);
 

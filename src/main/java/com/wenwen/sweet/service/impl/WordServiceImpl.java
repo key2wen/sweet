@@ -65,11 +65,18 @@ public class WordServiceImpl implements WordService {
         return wordMapper.getWord(wordId);
     }
 
-    public PagedResult<Word> selectWords(Integer pageNum, Integer pageSize) {
+    public PagedResult<Word> selectWords(Integer pageNum, Integer pageSize, Word word) {
         PagedResult<Word> pagedResult = new PagedResult<Word>(pageNum, pageSize);
 
-        pagedResult.setList(wordMapper.selectWords(pagedResult.getOffset(), pagedResult.getLimit()));
-        pagedResult.setTotal(wordMapper.countWords());
+        String wordName = null;
+        Integer classify = null;
+        if(word != null){
+            wordName = word.getWord();
+            classify = word.getClassify();
+        }
+
+        pagedResult.setList(wordMapper.selectWords(pagedResult.getOffset(), pagedResult.getLimit(), wordName, classify));
+        pagedResult.setTotal(wordMapper.countWords(wordName, classify));
         return pagedResult;
     }
 

@@ -1,18 +1,18 @@
 <table class="table table-hover" style="margin-left: 35px; width: 95%;">
-    <caption>
-        <br>
-        <embed height="50" width="100" src="${request.contextPath}/static/horse.mp3">
-
-            <object height="50" width="100" data="${request.contextPath}/static/horse.mp3"></object>
-
-
-            <audio controls>
-                <source src="${request.contextPath}/static/horse.mp3" type="audio/mpeg">
-            ##                <source src="horse.ogg" type="audio/ogg">
-                您的浏览器不支持该音频格式。
-            </audio>
-
-    </caption>
+##    <caption>
+##        <br>
+##        <embed height="50" width="100" src="${request.contextPath}/static/horse.mp3">
+##
+##            <object height="50" width="100" data="${request.contextPath}/static/horse.mp3"></object>
+##
+##
+##            <audio controls>
+##                <source src="${request.contextPath}/static/horse.mp3" type="audio/mpeg">
+##            ##                <source src="horse.ogg" type="audio/ogg">
+##                您的浏览器不支持该音频格式。
+##            </audio>
+##
+##    </caption>
 
     <caption>
         <br>
@@ -20,10 +20,36 @@
             <li>单词列表
             </li>
 
-            <button class="btn btn-default col-xs-offset-6" data-toggle="modal" style=""
+            <button class="btn btn-default col-xs-offset-4" data-toggle="modal" style=""
                     data-target="#newWordModal">
                 新增单词
             </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+            <select id="classify" name="classify">
+                <option value="-1" #if($classify==-1) selected #end>选择单词类型</option>
+                <option value="0" #if($classify==0) selected #end>默认类</option>
+                <option value="1" #if($classify==1) selected #end>1</option>
+                <option value="2" #if($classify==2) selected #end>2</option>
+                <option value="3" #if($classify==3) selected #end>3</option>
+                <option value="4" #if($classify==4) selected #end>4</option>
+                <option value="5" #if($classify==5) selected #end>5</option>
+                <option value="6" #if($classify==6) selected #end>6</option>
+                <option value="7" #if($classify==7) selected #end>7</option>
+                <option value="8" #if($classify==8) selected #end>8</option>
+                <option value="9" #if($classify==9) selected #end>9</option>
+                <option value="10" #if($classify==10) selected #end>10</option>
+                <option value="11" #if($classify==11) selected #end>11</option>
+                <option value="12" #if($classify==12) selected #end>12</option>
+                <option value="13" #if($classify==13) selected #end>13</option>
+                <option value="14" #if($classify==14) selected #end>14</option>
+                <option value="15" #if($classify==15) selected #end>15</option>
+                <option value="16" #if($classify==16) selected #end>16</option>
+                <option value="17" #if($classify==17) selected #end>17</option>
+                <option value="18" #if($classify==18) selected #end>18</option>
+                <option value="19" #if($classify==19) selected #end>19</option>
+                <option value="20" #if($classify==20) selected #end>20</option>
+            </select>
 
             &nbsp;&nbsp;<input type="text" placeholder="输入单词" class="input-small" id="searchWordName"
                                name="searchWordName">
@@ -37,6 +63,7 @@
         <th>ID</th>
         <th>单词</th>
         <th>类型</th>
+        <th>分类</th>
         <th>英式发音标</th>
         <th>美式发音标</th>
         <th>英式音频</th>
@@ -60,7 +87,24 @@
                     $!{word.word}
                 </a>
             </td>
-            <td class="col-xs-1">$!word.type</td>
+            <td class="col-xs-1">
+                #if($word.type==1)
+                    普通单词
+                #elseif($word.type==2)
+                    国际音标
+                #elseif($word.type==3)
+                    中国拼音
+                #else
+                    $word.type
+                #end
+            </td>
+            <td class="col-xs-1">
+                #if($word.classify == 0)
+                    默认
+                #else
+                    $!word.classify
+                #end
+            </td>
             <td class="col-xs-2">$!word.ukSymbol</td>
             <td class="col-xs-2">$!word.usSymbol</td>
 
@@ -149,8 +193,39 @@
                         </tr>
 
                         <tr>
+
+                            <td class="col-xs-2">单词分类：</td>
+                            <td class="col-xs-1">
+                                <select id="classify" name="classify" class="form-control">
+                                    <option selected value=0>默认分类</option>
+                                    <option value=1>1</option>
+                                    <option value=2>2</option>
+                                    <option value=3>3</option>
+                                    <option value=4>4</option>
+                                    <option value=5>5</option>
+                                    <option value=6>6</option>
+                                    <option value=7>7</option>
+                                    <option value=8>8</option>
+                                    <option value=9>9</option>
+                                    <option value=10>10</option>
+                                    <option value=11>11</option>
+                                    <option value=12>12</option>
+                                    <option value=13>13</option>
+                                    <option value=14>14</option>
+                                    <option value=15>15</option>
+                                    <option value=16>16</option>
+                                    <option value=17>17</option>
+                                    <option value=18>18</option>
+                                    <option value=19>19</option>
+                                    <option value=20>20</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
                             <td class="col-xs-1">英式音标:</td>
-                            <td class="col-xs-1"><input id="ukSymbol" name="ukSymbol" class="input-medium" value="" required/>
+                            <td class="col-xs-1"><input id="ukSymbol" name="ukSymbol" class="input-medium" value=""
+                                                        required/>
                             </td>
                             <td class="col-xs-1"><input type="file" name="ukVoicePath"></td>
                         </tr>
@@ -158,7 +233,8 @@
 
                         <tr>
                             <td class="col-xs-1">美式音标:</td>
-                            <td class="col-xs-1"><input id="usSymbol" name="usSymbol" class="input-medium" value="" required/>
+                            <td class="col-xs-1"><input id="usSymbol" name="usSymbol" class="input-medium" value=""
+                                                        required/>
                             </td>
                             <td class="col-xs-1"><input type="file" name="usVoicePath"></td>
                         </tr>
@@ -166,65 +242,80 @@
 
                         <tr>
                             <td class="col-xs-1">描述1:</td>
-                            <td class="col-xs-1"><input id="desc1" type="text" class="input-medium" name="desc1" value=""
+                            <td class="col-xs-1"><input id="desc1" type="text" class="input-medium" name="desc1"
+                                                        value=""
                                                         maxLength="100" required/></td>
                         </tr>
                         <tr>
                             <td class="col-xs-1">描述2:</td>
-                            <td class="col-xs-1"><input id="desc2" type="text" class="input-medium" name="desc2" value=""
-                                                        maxLength="100" /></td>
+                            <td class="col-xs-1"><input id="desc2" type="text" class="input-medium" name="desc2"
+                                                        value=""
+                                                        maxLength="100"/></td>
                         </tr>
                         <tr>
                             <td class="col-xs-1">描述3:</td>
-                            <td class="col-xs-1"><input id="desc3" type="text" class="input-medium" name="desc3" value=""
-                                                        maxLength="100" /></td>
+                            <td class="col-xs-1"><input id="desc3" type="text" class="input-medium" name="desc3"
+                                                        value=""
+                                                        maxLength="100"/></td>
                         </tr>
                         <tr>
                             <td class="col-xs-1">描述4:</td>
-                            <td class="col-xs-1"><input id="desc4" type="text" class="input-medium" name="desc4" value=""
-                                                        maxLength="100" /></td>
+                            <td class="col-xs-1"><input id="desc4" type="text" class="input-medium" name="desc4"
+                                                        value=""
+                                                        maxLength="100"/></td>
                         </tr>
                         <tr>
                             <td class="col-xs-1">描述5:</td>
-                            <td class="col-xs-1"><input id="desc5" type="text" class="input-medium" name="desc5" value=""
-                                                        maxLength="100" /></td>
+                            <td class="col-xs-1"><input id="desc5" type="text" class="input-medium" name="desc5"
+                                                        value=""
+                                                        maxLength="100"/></td>
                         </tr>
 
                         <tr>
                             <td class="col-xs-1">例子1:</td>
-                            <td class="col-xs-1"><input id="example1" type="text" class="input-medium" name="example1" value=""
+                            <td class="col-xs-1"><input id="example1" type="text" class="input-medium" name="example1"
+                                                        value=""
                                                         maxLength="100" required/></td>
-                            <td class="col-xs-1"><input id="trans1" type="text" class="input-medium" name="trans1" value=""
+                            <td class="col-xs-1"><input id="trans1" type="text" class="input-medium" name="trans1"
+                                                        value=""
                                                         maxLength="100" required/></td>
                         </tr>
                         <tr>
                             <td class="col-xs-1">例子2:</td>
-                            <td class="col-xs-1"><input id="example2" type="text" class="input-medium" name="example2" value=""
-                                                        maxLength="100" /></td>
-                            <td class="col-xs-1"><input id="trans2" type="text" class="input-medium" name="trans2" value=""
-                                                        maxLength="100" /></td>
+                            <td class="col-xs-1"><input id="example2" type="text" class="input-medium" name="example2"
+                                                        value=""
+                                                        maxLength="100"/></td>
+                            <td class="col-xs-1"><input id="trans2" type="text" class="input-medium" name="trans2"
+                                                        value=""
+                                                        maxLength="100"/></td>
                         </tr>
                         <tr>
                             <td class="col-xs-1">例子3:</td>
-                            <td class="col-xs-1"><input id="example3" type="text" class="input-medium" name="example3" value=""
-                                                        maxLength="100" /></td>
-                            <td class="col-xs-1"><input id="trans3" type="text" class="input-medium" name="trans3" value=""
-                                                        maxLength="100" /></td>
+                            <td class="col-xs-1"><input id="example3" type="text" class="input-medium" name="example3"
+                                                        value=""
+                                                        maxLength="100"/></td>
+                            <td class="col-xs-1"><input id="trans3" type="text" class="input-medium" name="trans3"
+                                                        value=""
+                                                        maxLength="100"/></td>
                         </tr>
                         <tr>
                             <td class="col-xs-1">例子4:</td>
-                            <td class="col-xs-1"><input id="example4" type="text" class="input-medium" name="example4" value=""
-                                                        maxLength="100" /></td>
-                            <td class="col-xs-1"><input id="trans4" type="text" class="input-medium" name="trans4" value=""
-                                                        maxLength="100" /></td>
+                            <td class="col-xs-1"><input id="example4" type="text" class="input-medium" name="example4"
+                                                        value=""
+                                                        maxLength="100"/></td>
+                            <td class="col-xs-1"><input id="trans4" type="text" class="input-medium" name="trans4"
+                                                        value=""
+                                                        maxLength="100"/></td>
                         </tr>
 
                         <tr>
                             <td class="col-xs-1">例子5:</td>
-                            <td class="col-xs-1"><input id="example5" type="text" class="input-medium" name="example5" value=""
-                                                        maxLength="100" /></td>
-                            <td class="col-xs-1"><input id="trans5" type="text" class="input-medium" name="trans5" value=""
-                                                        maxLength="100" /></td>
+                            <td class="col-xs-1"><input id="example5" type="text" class="input-medium" name="example5"
+                                                        value=""
+                                                        maxLength="100"/></td>
+                            <td class="col-xs-1"><input id="trans5" type="text" class="input-medium" name="trans5"
+                                                        value=""
+                                                        maxLength="100"/></td>
                         </tr>
 
                         <tr>
@@ -255,18 +346,29 @@
 
 
 <script>
+    $("#searchWordButton").on("click", function () {
+
+
+        var searchWord = $("#searchWordName").val();
+        var classify = $("#classify").val();
+        if (searchWord == null || searchWord == undefined || searchWord == "" || searchWord.length == 0) {
+            searchWord = "";
+        }
+        if (classify == null || classify == undefined || classify == "" || classify < 0) {
+            classify = -1;
+        }
+        if (searchWord == "" && classify == -1) {
+            alert("请选择要输入的单词 或者 选择单词分类");
+            return;
+        }
+        window.location.href = '${request.contextPath}/word/list?word=' + searchWord + '&classify=' + classify + '&pageNum='
+                + 0 + '&pageSize=' + 1000;
+//        $("#wordModalForm").submit();
+    });
+
     $("#cancelBtn").on("click", function () {
         $('#newWordModal').modal('hide');
     });
-
-
-    $("#searchWordButton").on("click"), function () {
-        var searchWord = $("#searchWordName").val();
-        if (searchWord == null || searchWord == undefined || searchWord == "" || searchWord.length == 0) {
-            return;
-        }
-        window.location.href = '${request.contextPath}/word/search?word=' + searchWord;
-    };
 </script>
 
 <script>

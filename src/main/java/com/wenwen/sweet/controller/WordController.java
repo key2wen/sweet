@@ -73,9 +73,18 @@ public class WordController {
 
     @Auth(value = {UserInfo.RoleType.NON_PAYMENT_USER})
     @RequestMapping("/list")
-    public ModelAndView list(Integer pageNum, Integer pageSize) {
-        PagedResult<Word> pagedWords = wordService.selectWords(pageNum, pageSize);
-        return new ModelAndView("/word/list", "words", pagedWords);
+    public ModelAndView list(Integer pageNum, Integer pageSize, Word word) {
+
+        ModelAndView mv = new ModelAndView("/word/list");
+        Integer classify = -1;
+        if(word != null && word.getClassify() != null){
+            classify = word.getClassify();
+        }
+        mv.addObject("classify", classify);
+
+        PagedResult<Word> pagedWords = wordService.selectWords(pageNum, pageSize, word);
+        mv.addObject("words", pagedWords);
+        return mv;
     }
 
     @RequestMapping("/delete/{wordId}")

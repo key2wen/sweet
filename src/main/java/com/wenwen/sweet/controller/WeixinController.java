@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
 
 /**
  * @author zhangyunxiang
@@ -39,7 +41,7 @@ public class WeixinController {
      */
     @ResponseBody
     @RequestMapping("/first")
-    public String first(HttpServletRequest request) {
+    public void first(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         //微信加密签名，signature结合了开发者填写的token参数和请求中的timestamp，nonce参数
         String signature = request.getParameter("signature");
@@ -50,11 +52,16 @@ public class WeixinController {
         //随机字符串
         String echostr = request.getParameter("echostr");
 
-        if (SignUtil.checkSignature(signature, timestamp, nonce)) {
-            logger.info("[signature: " + signature + "]<-->[timestamp: " + timestamp + "]<-->[nonce: " + nonce + "]<-->[echostr: " + echostr + "]");
-            return echostr;
-        } else {
-            return "";
+        PrintWriter out = response.getWriter();
+
+        try {
+            if (SignUtil.checkSignature(signature, timestamp, nonce)) {
+                logger.info("[signature: " + signature + "]<-->[timestamp: " + timestamp + "]<-->[nonce: " + nonce + "]<-->[echostr: " + echostr + "]");
+                out.write(echostr);
+                out.flush();
+            }
+        } finally {
+            out.close();
         }
 
     }

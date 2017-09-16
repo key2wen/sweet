@@ -16,9 +16,10 @@ public interface WordMapper {
 
     Word getWord(int wordId);
 
-    List<Word> selectWords(@Param("offset") int offset, @Param("size") int size);
+    List<Word> selectWords(@Param("offset") int offset, @Param("size") int size, @Param("word") String word
+            , @Param("classify") Integer classify);
 
-    int countWords();
+    int countWords(@Param("word") String word, @Param("classify") Integer classify);
 
     List<Word> searchWords(Word word);
 

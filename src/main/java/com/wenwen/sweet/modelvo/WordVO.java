@@ -14,6 +14,8 @@ public class WordVO {
     //'单词类型:1普通单词，2国际音标，3中国拼音',
     private Integer type;
 
+    private Integer classify;
+
     private Integer status;
 
     private String ukSymbol;
@@ -109,5 +111,11 @@ public class WordVO {
         this.status = status;
     }
 
+    public Integer getClassify() {
+        return classify;
+    }
 
+    public void setClassify(Integer classify) {
+        this.classify = classify;
+    }
 }

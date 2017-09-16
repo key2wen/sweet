@@ -41,6 +41,9 @@ public class Word extends BaseBean {
     @Size(max = 1024, message = "句子例子不能超过1024个字")
     private String example;
 
+    @NotNull(message = "分类不能为空")
+    private Integer classify;
+
     @Override
     public String toString() {
         return "WordVO{" +
@@ -133,6 +136,23 @@ public class Word extends BaseBean {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getClassify() {
+        return classify;
+    }
+
+    public void setClassify(Integer classify) {
+        this.classify = classify;
+    }
+
+    public static class Classify {
+        //无分类
+        public static final int NullClass = 0;
+        public static final int Animal = 1;
+        public static final int Plant = 2;
+        public static final int Fruits = 3;
+        public static final int Sports = 4;
     }
 
     public static class Type {

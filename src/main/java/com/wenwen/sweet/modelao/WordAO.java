@@ -28,6 +28,8 @@ public class WordAO {
 
     private String usSymbol;
 
+    private Integer classify;
+
 
 //    private String ukVoicePath;
 
@@ -117,6 +119,13 @@ public class WordAO {
         this.status = status;
     }
 
+    public Integer getClassify() {
+        return classify;
+    }
+
+    public void setClassify(Integer classify) {
+        this.classify = classify;
+    }
 
     public String getDesc1() {
         return desc1;

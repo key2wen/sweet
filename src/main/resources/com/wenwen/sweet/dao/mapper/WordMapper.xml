@@ -16,6 +16,7 @@
         <result property="usVoicePath" column="us_voice_path"/>
         <result property="desc" column="desc"/>
         <result property="example" column="example"/>
+        <result property="classify" column="classify"/>
 
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
@@ -23,7 +24,7 @@
 
 
     <sql id="word_fields">
-		word, `type`, `status`, uk_symbol, us_symbol, uk_voice_path, us_voice_path, `desc`, example, create_time, update_time
+		word, `type`, `status`, uk_symbol, us_symbol, uk_voice_path, us_voice_path, `desc`, example, `classify`, create_time, update_time
 	</sql>
 
     <select id="getWord" resultType="com.wenwen.sweet.model.Word" resultMap="word_result_map">
@@ -39,7 +40,7 @@
         <include refid="word_fields"/>
         )
         values(#{word}, #{type}, #{status}, #{ukSymbol}, #{usSymbol}, #{ukVoicePath}, #{usVoicePath}, #{desc},
-        #{example},
+        #{example},#{classify},
         now(),now())
     </insert>
 
@@ -64,6 +65,9 @@
         <if test="desc != null">
             `desc` = #{desc},
         </if>
+        <if test="classify != null">
+            `classify` = #{classify},
+        </if>
         <if test="example != null">
             example = #{example},
         </if>
@@ -83,13 +87,27 @@
         `id`,
         <include refid="word_fields"/>
         from sweet_word
-        where `status` != 1
+        where
+        <if test=" word != null and word != '' ">
+            word like CONCAT(#{word}, '%') and
+        </if>
+        <if test=" classify != null and classify >= 0">
+            classify = #{classify} and
+        </if>
+        `status` != 1
         order by update_time desc
         limit #{offset}, #{size}
     </select>
 
     <select id="countWords" resultType="Integer">
-		select count(*) from sweet_word where `status` != 1
+		select count(*) from sweet_word where
+        <if test=" word != null and word != '' ">
+            word like CONCAT(#{word}, '%') and
+        </if>
+        <if test=" classify != null and classify >= 0">
+            classify = #{classify} and
+        </if>
+		`status` != 1
 	</select>
 
     <select id="searchWords" resultType="com.wenwen.sweet.model.Word" resultMap="word_result_map">
