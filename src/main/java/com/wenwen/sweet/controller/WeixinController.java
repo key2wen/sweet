@@ -1,5 +1,6 @@
 package com.wenwen.sweet.controller;
 
+import com.wenwen.sweet.controller.weixin.CoreService;
 import com.wenwen.sweet.util.SignUtil;
 import com.wenwen.sweet.weixin.AuthorizationCode;
 import org.slf4j.Logger;
@@ -13,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
@@ -43,6 +45,31 @@ public class WeixinController {
     @RequestMapping("/first")
     public void first(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
+        boolean isGet = request.getMethod().toLowerCase().equals("get");
+
+        //调试
+        if (isGet) {
+
+            firstBindServerUrl(request, response);
+        } else {
+
+            response.setCharacterEncoding("UTF-8");
+            PrintWriter print = response.getWriter();
+
+            // 进入post聊天处理
+            System.out.println("enter post");
+
+            // 接收消息并返回消息
+            // 调用核心服务类接收处理请求
+            String respXml = CoreService.processRequest(request);
+            print.print(respXml);
+            print.flush();
+            print.close();
+        }
+
+    }
+
+    private void firstBindServerUrl(HttpServletRequest request, HttpServletResponse response) throws IOException {
         //微信加密签名，signature结合了开发者填写的token参数和请求中的timestamp，nonce参数
         String signature = request.getParameter("signature");
         //时间戳
@@ -63,7 +90,6 @@ public class WeixinController {
         } finally {
             out.close();
         }
-
     }
 
     /**
