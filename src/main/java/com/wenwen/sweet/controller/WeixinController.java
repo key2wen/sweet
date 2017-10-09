@@ -29,6 +29,9 @@ public class WeixinController {
 
     private static final String AUTH2_GET_ACCESS_TOKEN_URL = "https://api.weixin.qq.com/sns/oauth2/access_token?appid={appid}&secret={secret}&code={code}&grant_type=authorization_code";
 
+
+    private static final String AUTH_GET_ACCESS_TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=％s&appid=%s&secret=%s";
+
     @Autowired
     RestTemplate restTemplate;
 
@@ -36,6 +39,10 @@ public class WeixinController {
         return AUTH2_GET_ACCESS_TOKEN_URL.replace("{appid}", "wx918c0bd4994db440")
                 .replace("{secret}", "4643ffcb1de7f7e9eca755ef236afa7d")
                 .replace("{code}", code);
+    }
+
+    public String getAuthGetAccessTokenUrl(String code) {
+        return String.format(AUTH_GET_ACCESS_TOKEN_URL, "client_credential", "wx90c293a362674ebf", "5df92836c85b7e5d95eeccabbc413c75");
     }
 
     /**

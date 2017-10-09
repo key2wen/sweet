@@ -26,6 +26,10 @@ public class CoreService {
             String toUserName = (String) requestMap.get("ToUserName");
             // 消息类型
             String msgType = (String) requestMap.get("MsgType");
+            //
+            String receiveContent = (String) requestMap.get("Content");
+
+
             // 回复文本消息
             TextMessage textMessage = new TextMessage();
             textMessage.setToUserName(fromUserName);
@@ -34,11 +38,11 @@ public class CoreService {
             textMessage.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
             // 文本消息
             if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_TEXT)) {
-                respContent = "您发送的是文本消息哦！";
+                respContent = "您发送的是文本消息哦: " + receiveContent;
             }
             // 图片消息
             else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_IMAGE)) {
-                respContent = "您发送的是图片消息哦！";
+                respContent = "您发送的是图片消息哦: " + receiveContent;
             }
             // 语音消息
             else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_VOICE)) {
