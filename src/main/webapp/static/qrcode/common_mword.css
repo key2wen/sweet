@@ -37,6 +37,8 @@ input, select, button { border: 0px; }
 .page_box img, .view_body img { max-width: 600px; }
 .view_body{ font-size:16px;}
 .view_body p{ padding-bottom:5px; width:96%; padding-left:2%;}
+.sub_view_body { padding: 0px 10px; }
+.sub_view_body p{ padding-bottom:5px; width:96%; padding-left:10%;}
 .list_box { }
 .list_box .new_list { margin: 0px auto; display: block; overflow: hidden; border-bottom: 1px dashed #1D3AAD; position: relative; padding-bottom: 5px; margin-bottom: 5px; }
 .list_box .new_list .new_title, .list_box .new_list .new_time { float: left; text-align: left; overflow: hidden; line-height: 40px; display: inline; height: 40px; }
@@ -45,6 +47,7 @@ input, select, button { border: 0px; }
 .list_box .new_list .new_time { float: right; width: 8%; text-align: right; }
 .view_box { }
 .view_title { margin: 0px auto; font-size: 35px; font-weight: normal; text-align: left;  display: block; line-height: 20px; height: auto; padding: 0px 0px; padding-left:5%; padding-bottom:5%; padding-top:5%; border-bottom: 1px dashed #1D3AAD; margin-bottom:20px; color:#FF9900;}
+.sub_view_title { margin: 0px auto; font-size: 25px; font-weight: normal; text-align: left;  display: block; line-height: 20px; height: auto; padding: 0px 0px; padding-left:10%; padding-bottom:5%; padding-top:5%; border-bottom: 1px dashed #1D3AAD; margin-bottom:20px; color:#FF9900;}
 #viewBodyId{
 line-height:24px;
 width:96%;
@@ -55,7 +58,6 @@ padding-bottom:10px;
 }
 .view_title .view_word { height: 80px; line-height: 80px; display: inline-block; }
 .view_title .view_voice a { position: absolute; right: 0px; width: 40px; height: 40px; line-height: 40px; top: 0px; display: block; cursor: pointer; }
-
 
 
 

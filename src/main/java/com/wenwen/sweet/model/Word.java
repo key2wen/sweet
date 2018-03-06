@@ -16,7 +16,7 @@ public class Word extends BaseBean {
     @Size(max = 50, message = "单词不能超过50个字")
     private String word;
 
-    //'单词类型:1普通单词，2国际音标，3中国拼音',
+    //'单词类型:1普通单词，2国际音标，3中国拼音, 4 集合单词',
     @NotNull(message = "单词类型不能为空")
     private Integer type;
 
@@ -44,9 +44,16 @@ public class Word extends BaseBean {
     @NotNull(message = "分类不能为空")
     private Integer classify;
 
+    @Size(max = 255, message = "子单词不能超过255个字长度")
+    private String subWordIds;
+
+    private Integer preWord;
+
+    private Integer nextWord;
+
     @Override
     public String toString() {
-        return "WordVO{" +
+        return "Word{" +
                 "word='" + word + '\'' +
                 ", type=" + type +
                 ", status=" + status +
@@ -56,6 +63,10 @@ public class Word extends BaseBean {
                 ", usVoicePath='" + usVoicePath + '\'' +
                 ", desc='" + desc + '\'' +
                 ", example='" + example + '\'' +
+                ", classify=" + classify +
+                ", subWordIds='" + subWordIds + '\'' +
+                ", preWord=" + preWord +
+                ", nextWord=" + nextWord +
                 '}';
     }
 
@@ -146,6 +157,30 @@ public class Word extends BaseBean {
         this.classify = classify;
     }
 
+    public String getSubWordIds() {
+        return subWordIds;
+    }
+
+    public void setSubWordIds(String subWordIds) {
+        this.subWordIds = subWordIds;
+    }
+
+    public Integer getPreWord() {
+        return preWord;
+    }
+
+    public void setPreWord(Integer preWord) {
+        this.preWord = preWord;
+    }
+
+    public Integer getNextWord() {
+        return nextWord;
+    }
+
+    public void setNextWord(Integer nextWord) {
+        this.nextWord = nextWord;
+    }
+
     public static class Classify {
         //无分类
         public static final int NullClass = 0;
@@ -156,10 +191,11 @@ public class Word extends BaseBean {
     }
 
     public static class Type {
-        //'单词类型:1普通单词，2国际音标，3中国拼音(包括了单个字母)',
+        //'单词类型:1普通单词，2国际音标，3中国拼音(包括了单个字母), 4集合单词',
         public static final int NORMAL = 1;
         public static final int SYMBOL = 2;
         public static final int CHINESE = 3;
+        public static final int Collection = 4;
     }
 
     public static class Status{

@@ -1,0 +1,241 @@
+#set($layout="null.vm")
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>单词翻译</title>
+    <meta name="keywords" content="单词翻译">
+    <meta name="description" content="单词">
+    <meta http-equiv="X-UA-Compatible" content="IE=9">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+
+    <link rel="stylesheet" href="${request.contextPath}/static/qrcode/common_mword.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="${request.contextPath}/static/qrcode/mword.css" type="text/css">
+
+##    <script src="${request.contextPath}/static/qrcode/jq.js"></script>
+
+##    <link href="/static/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+##    <script src="/static/lib/bootstrap/js/bootstrap.min.js"></script>
+##    <script src="/static/lib/jquery/jquery.mobile-1.4.5.min.js"></script>
+</head>
+
+
+<body>
+
+<script type="text/javascript">
+    $(function () {
+        var width = $(window).width();
+        var tableWidth = $("#__01").width();
+        $("#viewBodyId").css("width", tableWidth);
+
+        $("a.go_read_class").live("click", function (e) {
+            playmic($(this).attr("url"), $(this).attr("fd"));
+        });
+    });
+
+    ####http://dict.youdao.com/dictvoice?audio=Request.QueryString["WordName"]
+    function playmic(text, fd) {
+        //alert(fd);
+        if (fd != 'uk') {
+            fd = 'en';
+        }
+
+        display('http://fanyi.baidu.com/gettts?lan=' + fd + '&text=' + text + '.&spd=2&source=alading')
+    }
+
+
+    function display(e) {
+        var old = $('<audio src="' + e + '"></audio>')[0];
+        var o = document.createElement("audio");
+
+        if (null != o && o.canPlayType && o.canPlayType("audio/mpeg")) {
+            old && old.pause(), o.src = e, old = o, o.play();
+        }
+        else {
+            var t = getFlashObject("asound");
+            if (t) try {
+                t.SetVariable("f", e), t.GotoFrame(1)
+            } catch (n) {
+            }
+        }
+    }
+</script>
+
+<div class="head_box">
+    <div class="home_top">
+        <a href="#"><img src="/static/images/new_104.png" class="logo"></a>
+
+    </div>
+</div>
+<div class="anniu">
+    <div class="anniuleft">
+    ##<!--<a class="clr1" href=#><img src="./qrcode/home.jpg">-->
+        ##<!--<p>首页</p></a>-->
+        ##<!--<a class="clr1" href="http://kenglishvip.com/index.php?m=App&TypeID="><img src="./qrcode/bak.jpg">-->
+        ##<!--<p>返回</p></a>-->
+    </div>
+    <div class="anniuright">
+    </div>
+</div>
+
+<div class="wapper">
+    <div class="view_title" id="ipDanci">
+
+        <p style="color: #1D3AAD;">$!{supWord.word}</p>
+
+        <br/>
+
+        <span style="font-size:18px;color:#333">
+            $!{supWord.ukSymbol}
+
+            #if(${supWord.ukVoicePath} && ${supWord.ukVoicePath} != "")
+                <a fd="uk" class="go_read_class read_class" url="${supWord.ukVoicePath}" href="javascript:;"></a>
+            #else
+                <a fd="uk" class="go_read_class read_class"
+                   url="http://fanyi.baidu.com/gettts?lan=uk&text=$!{supWord.word}.&spd=2&source=alading"
+                   href="javascript:;"></a>
+            #end
+        </span>
+        &nbsp;
+
+        <span style="font-size:18px;color:#333">
+            $!{supWord.usSymbol}
+
+            #if(${supWord.usVoicePath} && ${supWord.usVoicePath} != "")
+                <a fd="en" class="go_read_class read_class" url="${supWord.usVoicePath}" href="javascript:;"></a>
+            #else
+                <a fd="en" class="go_read_class read_class"
+                   url="http://fanyi.baidu.com/gettts?lan=en&text=$!{supWord.word}.&spd=2&source=alading"
+                   href="javascript:;"></a>
+            #end
+        </span>
+
+    </div>
+
+    <div class="clear"></div>
+    <div class="view_body" id="viewBodyId">
+
+        #foreach(${desc} in $!{supWord.descList})
+            <p style="">$!{desc}</p>
+        #end
+
+        #if(${supWord.exampleList})
+            <p style="font-weight:bold;padding-bottom:8px; margin-top:20px; font-size:18px;">双语句例：<br></p>
+        #end
+
+        #foreach($!{exam} in $!{supWord.exampleList})
+            <p>$!{exam.val} <a class="go_read_class read_class voice_class"
+                               url="http://fanyi.baidu.com/gettts?lan=en&text=$!{exam.val} .&spd=2&source=alading"
+                               href="javascript:;"></a>
+            </p>
+            <p style="padding-bottom:18px;">$!{exam.trans}</p>
+        #end
+    </div>
+
+
+    #foreach(${subWord} in ${subWords})
+
+
+        <div class="sub_view_title" id="ipDanci">
+
+            <p style="color: #1D3AAD;">$!{subWord.word}</p>
+
+            <br/>
+
+            <span style="font-size:18px;color:#333">
+            $!{subWord.ukSymbol}
+
+                #if(${subWord.ukVoicePath} && ${subWord.ukVoicePath} != "")
+                    <a fd="uk" class="go_read_class read_class" url="${subWord.ukVoicePath}" href="javascript:;"></a>
+                #else
+                    <a fd="uk" class="go_read_class read_class"
+                       url="http://fanyi.baidu.com/gettts?lan=uk&text=$!{subWord.word}.&spd=2&source=alading"
+                       href="javascript:;"></a>
+                #end
+            </span>
+            &nbsp;
+
+            <span style="font-size:18px;color:#333">
+            $!{subWord.usSymbol}
+
+                #if(${subWord.usVoicePath} && ${subWord.usVoicePath} != "")
+                    <a fd="en" class="go_read_class read_class" url="${subWord.usVoicePath}" href="javascript:;"></a>
+                #else
+                    <a fd="en" class="go_read_class read_class"
+                       url="http://fanyi.baidu.com/gettts?lan=en&text=$!{subWord.word}.&spd=2&source=alading"
+                       href="javascript:;"></a>
+                #end
+        </span>
+
+        </div>
+
+        <div class="clear"></div>
+        <div class="sub_view_body" id="viewBodyId">
+
+            #foreach(${desc} in $!{subWord.descList})
+                <p style="">$!{desc}</p>
+            #end
+
+            #if(${subWord.exampleList})
+                <p style="font-weight:bold;padding-bottom:8px; margin-top:20px; font-size:18px;">双语句例：<br></p>
+            #end
+
+            #foreach($!{exam} in $!{subWord.exampleList})
+                <p>$!{exam.val} <a class="go_read_class read_class voice_class"
+                                   url="http://fanyi.baidu.com/gettts?lan=en&text=$!{exam.val} .&spd=2&source=alading"
+                                   href="javascript:;"></a>
+                </p>
+                <p style="padding-bottom:18px;">$!{exam.trans}</p>
+            #end
+        </div>
+
+
+        <hr style=" height:2px;border:none;border-top:2px dotted #185598;"/>
+
+    #end
+
+</div>
+
+<style type="text/css">
+    #box, #box2, #box3, #box4 {
+        padding: 10px;
+        border: 1px solid green;
+    }
+</style>
+<script type="text/javascript">
+    function openShutManager(oSourceObj, oTargetObj, shutAble, oOpenTip, oShutTip) {
+        var sourceObj = typeof oSourceObj == "string" ? document.getElementById(oSourceObj) : oSourceObj;
+        var targetObj = typeof oTargetObj == "string" ? document.getElementById(oTargetObj) : oTargetObj;
+        var openTip = oOpenTip || "";
+        var shutTip = oShutTip || "";
+        if (targetObj.style.display != "none") {
+            if (shutAble) return;
+            targetObj.style.display = "none";
+            if (openTip && shutTip) {
+                sourceObj.innerHTML = shutTip;
+            }
+        } else {
+            targetObj.style.display = "block";
+            if (openTip && shutTip) {
+                sourceObj.innerHTML = openTip;
+            }
+        }
+    }
+</script>
+<p><a href="#" onclick="openShutManager(this,'box')">点击展开</a></p>
+<p id="box" style="display:none">
+    这里面放的是box的内容.
+</p>
+<p><a href="#" onclick="openShutManager(this,'box2',true)">点击展开</a></p>
+<p id="box2" style="display:none">
+    这里面放的是box的内容.
+</p>
+
+</body>
+</html>

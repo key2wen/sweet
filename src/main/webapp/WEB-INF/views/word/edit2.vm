@@ -1,0 +1,185 @@
+<form id="wordEidtForm" class="form-horizontal" action="${request.contextPath}/file/upload/word"
+      method="post" enctype="multipart/form-data">
+
+    <caption>
+        <br>
+        <ol class="breadcrumb">
+            <li>#if($word)编辑单词信息 #else 新增单词信息#end</li>
+        </ol>
+    </caption>
+
+    <input hidden id="id" name="id" class="input-medium" value="$!{word.id}"/>
+
+    <div class="modal-body">
+
+        <table class="table table-hover" style="margin-left: 35px; width: 95%;">
+            <tbody>
+            <tr>
+                <td class="col-xs-1">单词:</td>
+                <td class="col-xs-1"><input id="word" type="text" class="input-medium" name="word" value="$!{word.word}"
+                                            maxLength="50" required/></td>
+            </tr>
+
+            <tr>
+
+                <td class="col-xs-2">单词类型：</td>
+                <td class="col-xs-1">
+                    <select id="type" name="type" class="form-control">
+
+                        <option value=1 #if(${word.type}==1) selected #end >普通单词</option>
+                        <option value=2 #if(${word.type}==2) selected #end >国际音标</option>
+                        <option value=3 #if(${word.type}==3) selected #end>中文拼音</option>
+                        <option value=3 #if(${word.type}==4) selected #end>集合单词</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+
+                <td class="col-xs-2">单词分类：</td>
+                <td class="col-xs-1">
+                    <select id="classify" name="classify" class="form-control">
+                        <option value=0 #if(${word.classify}==0) selected #end>默认分类</option>
+                        <option value=1 #if(${word.classify}==1) selected #end>1</option>
+                        <option value=2 #if(${word.classify}==2) selected #end>2</option>
+                        <option value=3 #if(${word.classify}==3) selected #end>3</option>
+                        <option value=4 #if(${word.classify}==4) selected #end>4</option>
+                        <option value=5 #if(${word.classify}==5) selected #end>5</option>
+                        <option value=6 #if(${word.classify}==6) selected #end>6</option>
+                        <option value=7 #if(${word.classify}==7) selected #end>7</option>
+                        <option value=8 #if(${word.classify}==8) selected #end>8</option>
+                        <option value=9 #if(${word.classify}==9) selected #end>9</option>
+                        <option value=10 #if(${word.classify}==10) selected #end>10</option>
+                        <option value=11 #if(${word.classify}==11) selected #end>11</option>
+                        <option value=12 #if(${word.classify}==12) selected #end>12</option>
+                        <option value=13 #if(${word.classify}==13) selected #end>13</option>
+                        <option value=14 #if(${word.classify}==14) selected #end>14</option>
+                        <option value=15 #if(${word.classify}==15) selected #end>15</option>
+                        <option value=16 #if(${word.classify}==16) selected #end>16</option>
+                        <option value=17 #if(${word.classify}==17) selected #end>17</option>
+                        <option value=18 #if(${word.classify}==18) selected #end>18</option>
+                        <option value=19 #if(${word.classify}==19) selected #end>19</option>
+                        <option value=20 #if(${word.classify}==20) selected #end>20</option>
+
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-xs-1">英式音标:</td>
+                <td class="col-xs-1"><input id="ukSymbol" name="ukSymbol" class="input-medium" value="$!{word.ukSymbol}" required/>
+                </td>
+                <td class="col-xs-1"> 原文件:$!{word.ukVoicePath} <input type="file" name="ukVoicePath"></td>
+            </tr>
+
+
+            <tr>
+                <td class="col-xs-1">美式音标:</td>
+                <td class="col-xs-1"><input id="usSymbol" name="usSymbol" class="input-medium" value="$!{word.usSymbol}" required/>
+                </td>
+                <td class="col-xs-1"> 原文件:$!{word.usVoicePath} <input type="file" name="usVoicePath"></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-xs-1">描述1:</td>
+                <td class="col-xs-1"><input id="desc1" type="text" class="input-medium" name="desc1"
+                    #if(${word.descList} and ${word.descList.size()} > 0) value="$!{word.descList.get(0)}" #end
+                                            maxLength="100" required/></td>
+            </tr>
+            <tr>
+                <td class="col-xs-1">描述2:</td>
+                <td class="col-xs-1"><input id="desc2" type="text" class="input-medium" name="desc2"
+                    #if(${word.descList} and ${word.descList.size()} > 1) value="$!{word.descList.get(1)}" #end
+                                            maxLength="100"/></td>
+            </tr>
+            <tr>
+                <td class="col-xs-1">描述3:</td>
+                <td class="col-xs-1"><input id="desc3" type="text" class="input-medium" name="desc3"
+                    #if(${word.descList} and ${word.descList.size()} > 2) value="$!{word.descList.get(2)}" #end
+                                            maxLength="100"/></td>
+            </tr>
+            <tr>
+                <td class="col-xs-1">描述4:</td>
+                <td class="col-xs-1"><input id="desc4" type="text" class="input-medium" name="desc4"
+                    #if(${word.descList} and ${word.descList.size()} > 3) value="$!{word.descList.get(3)}" #end
+                                            maxLength="100"/></td>
+            </tr>
+            <tr>
+                <td class="col-xs-1">描述5:</td>
+                <td class="col-xs-1"><input id="desc5" type="text" class="input-medium" name="desc5"
+                    #if(${word.descList} and ${word.descList.size()} > 4) value="$!{word.descList.get(4)}" #end
+                                            maxLength="100"/></td>
+            </tr>
+
+            <tr>
+                <td class="col-xs-1">例子1:</td>
+                <td class="col-xs-1"><input id="example1" type="text" class="input-medium" name="example1"
+                    #if(${word.exampleList} and ${word.exampleList.size()} > 0) value="$!{word.exampleList.get(0).val}" #end
+                                            maxLength="100" required/></td>
+                <td class="col-xs-1"><input id="trans1" type="text" class="input-medium" name="trans1"
+                    #if(${word.exampleList} and ${word.exampleList.size()} > 0) value="$!{word.exampleList.get(0).trans}" #end
+                                            maxLength="100" required/></td>
+            </tr>
+            <tr>
+                <td class="col-xs-1">例子2:</td>
+                <td class="col-xs-1"><input id="example2" type="text" class="input-medium" name="example2"
+                    #if(${word.exampleList} and ${word.exampleList.size()} > 1) value="$!{word.exampleList.get(1).val}" #end
+                                            maxLength="100"/></td>
+                <td class="col-xs-1"><input id="trans2" type="text" class="input-medium" name="trans2"
+                    #if(${word.exampleList} and ${word.exampleList.size()} > 1) value="$!{word.exampleList.get(1).trans}" #end
+                                            maxLength="100"/></td>
+            </tr>
+            <tr>
+                <td class="col-xs-1">例子3:</td>
+                <td class="col-xs-1"><input id="example3" type="text" class="input-medium" name="example3"
+                    #if(${word.exampleList} and ${word.exampleList.size()} > 2) value="$!{word.exampleList.get(2).val}" #end
+                                            maxLength="100"/></td>
+                <td class="col-xs-1"><input id="trans3" type="text" class="input-medium" name="trans3"
+                    #if(${word.exampleList} and ${word.exampleList.size()} > 2) value="$!{word.exampleList.get(2).trans}" #end
+                                            maxLength="100"/></td>
+            </tr>
+            <tr>
+                <td class="col-xs-1">例子4:</td>
+                <td class="col-xs-1"><input id="example4" type="text" class="input-medium" name="example4"
+                    #if(${word.exampleList} and ${word.exampleList.size()} > 3) value="$!{word.exampleList.get(3).val}" #end
+                                            maxLength="100"/></td>
+                <td class="col-xs-1"><input id="trans4" type="text" class="input-medium" name="trans4"
+                    #if(${word.exampleList} and ${word.exampleList.size()} > 3) value="$!{word.exampleList.get(3).trans}" #end
+                                            maxLength="100"/></td>
+            </tr>
+
+            <tr>
+                <td class="col-xs-1">例子5:</td>
+                <td class="col-xs-1"><input id="example5" type="text" class="input-medium" name="example5"
+                    #if(${word.exampleList} and ${word.exampleList.size()} > 4) value="$!{word.exampleList.get(4).val}" #end
+                                            maxLength="100"/></td>
+                <td class="col-xs-1"><input id="trans5" type="text" class="input-medium" name="trans5"
+                    #if(${word.exampleList} and ${word.exampleList.size()} > 4) value="$!{word.exampleList.get(4).trans}" #end
+                                            maxLength="100"/></td>
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <div class="form-group">
+        <div for="title" class="col-sm-4 control-label">
+            <button id="cancelBtn" type="button" class="btn bg-primary">取消</button>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="submit" id="submitBtn" class="btn bg-primary">确认</button>
+        </div>
+    </div>
+
+
+</form>
+
+<script>
+
+    $("#cancelBtn").on("click", function () {
+        window.history.go(-1);
+    });
+
+</script>

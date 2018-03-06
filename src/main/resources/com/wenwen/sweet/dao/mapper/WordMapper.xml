@@ -18,13 +18,18 @@
         <result property="example" column="example"/>
         <result property="classify" column="classify"/>
 
+        <result property="subWordIds" column="sub_word_ids"/>
+        <result property="preWord" column="pre_word"/>
+        <result property="nextWord" column="next_word"/>
+
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
     </resultMap>
 
 
     <sql id="word_fields">
-		word, `type`, `status`, uk_symbol, us_symbol, uk_voice_path, us_voice_path, `desc`, example, `classify`, create_time, update_time
+		word, `type`, `status`, uk_symbol, us_symbol, uk_voice_path, us_voice_path, `desc`, example,
+		`classify`, sub_word_ids, pre_word, next_word, create_time, update_time
 	</sql>
 
     <select id="getWord" resultType="com.wenwen.sweet.model.Word" resultMap="word_result_map">
@@ -40,7 +45,7 @@
         <include refid="word_fields"/>
         )
         values(#{word}, #{type}, #{status}, #{ukSymbol}, #{usSymbol}, #{ukVoicePath}, #{usVoicePath}, #{desc},
-        #{example},#{classify},
+        #{example},#{classify}, #{subWordIds}, #{preWord}, #{nextWord},
         now(),now())
     </insert>
 
@@ -71,6 +76,17 @@
         <if test="example != null">
             example = #{example},
         </if>
+
+        <if test="subWordIds != null">
+            sub_word_ids = #{subWordIds},
+        </if>
+        <if test="preWord != null">
+            pre_word = #{preWord},
+        </if>
+        <if test="nextWord != null">
+            next_word = #{nextWord},
+        </if>
+
         <if test="createTime != null">
             create_time = #{createTime},
         </if>
@@ -140,6 +156,17 @@
             <if test="example != null">
                 example = #{example} and
             </if>
+
+            <if test="subWordIds != null">
+                sub_word_ids = #{subWordIds} and
+            </if>
+            <if test="preWord != null">
+                pre_word = #{preWord} and
+            </if>
+            <if test="nextWord != null">
+                next_word = #{nextWord} and
+            </if>
+
         </trim>
     </select>
 
