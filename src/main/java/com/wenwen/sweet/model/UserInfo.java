@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
  *
  * @version 1.0
  * @date 2016-01-30
- * @author ls
+ * @author zwh
  *
  * 描述：用户信息实体类
  */

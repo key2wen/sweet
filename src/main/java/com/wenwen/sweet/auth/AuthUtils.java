@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Created by tbj on 17/9/1.
+ * Created by zwh
  */
 public class AuthUtils {
 

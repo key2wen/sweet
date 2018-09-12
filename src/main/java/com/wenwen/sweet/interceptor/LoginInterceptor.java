@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
- * Created by ls on 15-4-24.
+ * Created by zwh on 15-4-24.
  */
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 
